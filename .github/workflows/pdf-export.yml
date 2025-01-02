@@ -1,0 +1,29 @@
+name: Generate and Deploy PDF
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Generate PDF
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install pandoc and TeX Live
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y pandoc texlive texlive-latex-extra texlive-fonts-recommended texlive-xetex
+
+    - name: Convert Markdown to PDF
+      run: pandoc index.md -o ial-exam.pdf --pdf-engine=xelatex
+
+    - name: Deploy PDF to Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .
