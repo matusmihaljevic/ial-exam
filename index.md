@@ -29,7 +29,7 @@ Používají se tři různé složitosti:
 Abstraktní datový typ (ADT) je definován množinou hodnot, kterých smí nabýt každý prvek tohoto typu, a množinou operací nad tímto typem.
 
 ### ADT TList
-![ADT TList](llist.png )
+![ADT TList](images/llist.png )
 
 ### Rekurzivní definice
 
@@ -41,9 +41,9 @@ Dva seznamy jsou ekvivalentní, když jsou oba prázdné nebo když se rovnají 
 
 ## Zásobník a fronta
 
-![ADT TStack](stack.png )
+![ADT TStack](images/stack.png )
 
-![ADT TQueue](queue.png )
+![ADT TQueue](images/queue.png )
 
 ### Převod infixové notace na postfixovou
 
@@ -210,7 +210,7 @@ void LevelOrder (TDLList *l, TNode *ptr)
 - Každá položka má zvláštní složku – klíč
 - V tabulce s (ostrým) vyhledáváním je hodnota klíče jedinečná (neexistují dvě či více položek se stejnou hodnotou klíče).
 
-![ADT TTable](table.png )
+![ADT TTable](images/table.png )
 
 ### Sekvenční vyhledávání
 ```javascript
@@ -398,10 +398,10 @@ pro který navíc platí:
 Časová složitost: **Θ(log n)** (délka všech cest od kořene k listům je stejná)
 Obvykle se používají (a, 2a-1) nebo (a,2a)-stromy, časté parametry: **(2,3)** nebo **(2,4)**
 
-![Vkládání do (a,b)-stromu](ab_insert.png )
+![Vkládání do (a,b)-stromu](images/ab_insert.png )
 **Varianta**: zcela naplněné uzly jsou štěpeny už cestou dolů stromem, při vyhledávání místa, kam má být nový prvek vložen.
 
-![Mazání v (a,b)-stromu](ab_delete.png)
+![Mazání v (a,b)-stromu](images/ab_delete.png)
 
 ### LLRB stromy
 LLRB strom je binární vyhledávací strom s vnějšími vrcholy, jehož hrany jsou obarveny červeně a černě. Přitom platí následující axiomy:
@@ -427,16 +427,16 @@ Transformace 3-vrcholu – nahradíme 2 vrcholy a červená hrana musí vždy v�
 - Vyváženost stromu je udržována rotacemi, a to jen **červených** hran.
 - Nový uzel vkládáme na nejnižší hladinu, připojujeme ke stromu pomocí červené hrany a v případě potřeby (červená hrana vedoucí doprava nebo 2 červené hrany nad sebou) rotujeme.
 
-![Vkládání v LLRB](llrb_balance.png)
+![Vkládání v LLRB](images/llrb_balance.png)
 
 - Při cestě stromem dolů **štěpíme zcela zaplněné uzly** (4-vrcholy)
 - Štěpení je realizováno pomocí **přebarvení** – tím se uzel rozštěpí a prostřední klíč se stane součástí nadřazeného vrcholu (víme jistě, že se tam vleze, protože všechny 4-vrcholy rovnou štěpíme).
 - Na nejnižší úrovni vložíme uzel.
 - Štěpení může zanechat ve stromu špatné konfigurace červených hran (červená hrana vedoucí doprava, nebo 2 červené hrany nad sebou) – opravujeme pomocí **rotací při cestě stromem zpět ke kořeni** (jednoduché při využití rekurze)
 
-![Vkládání v LLRB](llrb_insert.png)
+![Vkládání v LLRB](images/llrb_insert.png)
 
-![Vkládání v LLRB](llrb_delete.png)
+![Vkládání v LLRB](images/llrb_delete.png)
 
 ### Tabulka s přímým přístupem (TPP)
 - Implementace vyhledávací tabulky polem, ve které jsou klíče mapovány na indexy pole:
@@ -535,7 +535,7 @@ Max+1 – velikost pole
 - Tabulka (pole) musí obsahovat **alespoň jeden volný prvek**. Efektivní kapacita je o 1 menší než počet položek.
 - Tabulka je implementovaná **kruhovým polem**.
 
-![Překrývání seznamů synonym](htable_overlap.png)
+![Překrývání seznamů synonym](images/htable_overlap.png)
 
 ##### Velikost rozptylovacího pole
 - Krok s hodnotou 1 má tendenci vytvářet shluky (angl. **cluster**).
@@ -545,14 +545,14 @@ Max+1 – velikost pole
 - Je vhodné dimenzovat velikost mapovacího pole TRP tak, aby bylo rovno prvočíslu. 
 
 ##### TRP s dvojí rozptylovací funkcí
-![TRP s dvojí rozptylovací funkcí](htable_2hash.png)
+![TRP s dvojí rozptylovací funkcí](images/htable_2hash.png)
 
 
 ##### Brentova varianta
 - Brentova varianta je **varianta metody TRP se dvěma rozptylovacími funkcemi**.
 - Brentova varianta provádí **při vkládání rekonfiguraci prvků** pole s cílem **investovat do vkládání** a získat lepší průměrnou dobu vyhledání.
 
-![Brentova varianta](htable_brent.png)
+![Brentova varianta](images/htable_brent.png)
 
 ##### Hodnocení TRP s implicitním zřetězením
 - Operaci **Delete** lze řešit pomocí **zaslepení** – vložením klíče, který nebude nikdy vyhledáván.
