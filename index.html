@@ -1,0 +1,968 @@
+<p><a href="ial-exam.pdf">PDF verze</a></p>
+<h2 id="úvod">Úvod</h2>
+<h3 id="algoritmus">Algoritmus</h3>
+<ul>
+<li>Konečná, uspořádaná množina úplně definovaných pravidel pro vyřešení
+nějakého problému</li>
+<li>Posloupnost výpočetních kroků, které transformují vstup na
+výstup</li>
+</ul>
+<h3 id="heuristika">Heuristika</h3>
+<ul>
+<li>Postup, který nedává vždy přesné řešení problému.</li>
+<li>Ve většině případů dává dostatečně přesné řešení v rozumném
+čase.</li>
+<li>Nezaručuje nalezení přesného řešení.</li>
+<li>Použijeme tehdy, pokud pro daný problém neexistuje přesný
+algoritmus, nebo jeho použití je neekonomické.</li>
+</ul>
+<h3 id="asymptotická-časová-zložitost">Asymptotická časová
+zložitost</h3>
+<p>Odvozena od počtu tzv. elementárních operací: sčítání, násobení,
+porovnání, skoky, atd.</p>
+<p>Používají se tři různé složitosti: - O – Omikron (velké O, Ό, big O)
+– horní hranice chování - Ω – Omega – dolní hranice chování - Θ – Théta
+– třída chování</p>
+<h3 id="prostorová-složitost">Prostorová složitost</h3>
+<ul>
+<li>Měří paměťové nároky algoritmu</li>
+<li>Kolik nejvíce elementárních paměťových buněk algoritmus
+použije.</li>
+<li>Elementární paměťová buňka: proměnná typu integer, float, byte
+apod.</li>
+</ul>
+<h2 id="lineární-abstraktní-datové-typy">Lineární abstraktní datové
+typy</h2>
+<h3 id="abstraktní-datový-typ-adt">Abstraktní datový typ (ADT)</h3>
+<p>Abstraktní datový typ (ADT) je definován množinou hodnot, kterých smí
+nabýt každý prvek tohoto typu, a množinou operací nad tímto typem.</p>
+<h3 id="adt-tlist">ADT TList</h3>
+<figure>
+<img src="images/llist.png" alt="ADT TList" />
+<figcaption aria-hidden="true">ADT TList</figcaption>
+</figure>
+<h3 id="rekurzivní-definice">Rekurzivní definice</h3>
+<h4 id="délka-seznamu">Délka seznamu</h4>
+<p>Je-li seznam prázdný, má délku nula. V jiném případě je jeho délka 1
+plus délka zbytku seznamu.</p>
+<h4 id="ekvivalence-dvou-seznamů">Ekvivalence dvou seznamů</h4>
+<p>Dva seznamy jsou ekvivalentní, když jsou oba prázdné nebo když se
+rovnají jejich první prvky a současně jejich zbytky.</p>
+<h2 id="zásobník-a-fronta">Zásobník a fronta</h2>
+<figure>
+<img src="images/stack.png" alt="ADT TStack" />
+<figcaption aria-hidden="true">ADT TStack</figcaption>
+</figure>
+<figure>
+<img src="images/queue.png" alt="ADT TQueue" />
+<figcaption aria-hidden="true">ADT TQueue</figcaption>
+</figure>
+<h3 id="převod-infixové-notace-na-postfixovou">Převod infixové notace na
+postfixovou</h3>
+<ol type="1">
+<li>Zpracovávej vstupní řetězec položku po položce zleva doprava a
+vytvářej postupně výstupní řetězec.</li>
+<li>Je-li zpracovávanou položkou operand, přidej ho na konec
+vznikajícího výstupního řetězce.</li>
+<li>Je-li zpracovávanou položkou levá závorka, vlož ji na vrchol
+zásobníku.</li>
+<li>Je-li zpracovávanou položkou operátor, pak ho na vrchol zásobníku
+vlož v případě, že:
+<ul>
+<li>zásobník je prázdný</li>
+<li>na vrcholu zásobníku je levá závorka</li>
+<li>na vrcholu zásobníku je operátor s nižší prioritou</li>
+</ul>
+Je-li na vrcholu zásobníku operátor s vyšší nebo shodnou prioritou,
+odstraň ho, vlož ho na konec výstupního řetězce a opakuj krok 4, až se
+ti podaří operátor vložit na vrchol.</li>
+<li>Je-li zpracovávanou položkou pravá závorka, odebírej z vrcholu
+položky a dávej je na konec výstupního řetězce, až narazíš na levou
+závorku. Levou závorku odstraň ze zásobníku. Tím je pár závorek
+zpracován.</li>
+<li>Je-li zpracovávanou položkou omezovač <strong>=</strong>, pak
+postupně odstraňuj prvky z vrcholu zásobníku a přidávej je na konec
+řetězce, až zásobník zcela vyprázdníš, a na konec přidej rovnítko.</li>
+</ol>
+<h3 id="prioritní-fronta">Prioritní fronta</h3>
+<ul>
+<li>Prvkům fronty je navíc přiřazena priorita.</li>
+<li>Prvky s vyšší prioritu přeskakují prvky s nižší prioritou a jsou
+obsluhovány dříve než prvky s nižší prioritou.</li>
+<li>Jako první opouští frontu nejstarší prvek s nejvyšší prioritou.</li>
+</ul>
+<h3 id="mapovací-funkce">Mapovací funkce</h3>
+<ul>
+<li>Převádí n-tici indexů prvku n-dimenzionálního pole na jeden index
+jednorozměrného pole.</li>
+<li>Závisí na tom, jak je n-dimenzionální pole uloženo v paměti (po
+řádcích nebo po sloupcích).</li>
+</ul>
+<h2 id="stromové-datové-struktury">Stromové datové struktury</h2>
+<h3 id="kořenový-strom">Kořenový strom</h3>
+<p>Kořenový strom je souvislý acyklický graf, který má jeden zvláštní
+uzel, který se nazývá kořen (angl. root).</p>
+<ul>
+<li>Kořen je takový uzel, že platí, že z každého uzlu stromu vede jen
+jedna cesta do kořene.</li>
+</ul>
+<h3 id="výška-stromu">Výška stromu</h3>
+<ul>
+<li>výška prázdného stromu je 0,</li>
+<li>výška stromu s jediným uzlem (kořenem) je 1,</li>
+<li>výška jiného stromu je počet hran od kořene k nejvzdálenějšímu uzlu
++ 1.</li>
+</ul>
+<h3 id="rekurzivní-definice-binárního-stromu">Rekurzivní definice
+binárního stromu</h3>
+<p>Binární strom je buď prázdný, nebo sestává z jednoho uzlu zvaného
+kořen a dvou binárních podstromů – levého a pravého.</p>
+<p>Binární strom sestává z: - <strong>kořene</strong>, -
+<strong>neterminálních</strong> (vnitřních) uzlů, které mají ukazatel na
+jednoho nebo dva uzly synovské a - <strong>terminálních</strong> uzlů
+(listů), které nemají žádné potomky.</p>
+<h3 id="vyváženost-stromu">Vyváženost stromu</h3>
+<ul>
+<li>Binární strom je váhově vyvážený, když pro každý jeho uzel platí, že
+počty uzlů jeho levého a pravého podstromu se rovnají a nebo se liší
+právě o 1.</li>
+<li>Binární strom je výškově vyvážený, když pro každý jeho uzel platí,
+že výška levého podstromu se rovná výšce pravého podstromu a nebo se
+liší právě o 1.</li>
+<li>Maximální výška vyvážených stromů: <strong>c.log(n)</strong></li>
+</ul>
+<h3 id="výška-stromu-rekurzivně">Výška stromu – rekurzivně</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> HeightBT <span class="op">(</span>TNode <span class="op">*</span>ptr<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>max<span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> hl<span class="op">,</span>hr<span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>ptr <span class="op">!=</span> NULL<span class="op">){</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        HeightBT<span class="op">(</span>ptr<span class="op">-&gt;</span>left<span class="op">,&amp;</span>hl<span class="op">);</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        HeightBT<span class="op">(</span>ptr<span class="op">-&gt;</span>right<span class="op">,&amp;</span>hr<span class="op">);</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>hl <span class="op">&gt;</span> hr<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>            <span class="op">*</span>max <span class="op">=</span> hl<span class="op">+</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>            <span class="op">*</span>max <span class="op">=</span> hr<span class="op">+</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="co">// if ptr != NULL</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="op">*</span>max <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>nebo</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> max <span class="op">(</span><span class="dt">int</span> n1<span class="op">,</span> <span class="dt">int</span> n2<span class="op">)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> <span class="co">// funkce vrátí hodnotu většího ze dvou parametrů</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>n1 <span class="op">&gt;</span> n2<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> n1<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> n2<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> Height <span class="op">(</span>TNode <span class="op">*</span>ptr<span class="op">)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>ptr <span class="op">!=</span> NULL<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> max<span class="op">(</span>Height<span class="op">(</span>ptr<span class="op">-&gt;</span>left<span class="op">),</span>Height<span class="op">(</span>ptr<span class="op">-&gt;</span>right<span class="op">))+</span><span class="dv">1</span><span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="ekvivalence-struktur-dvou-bs">Ekvivalence (struktur) dvou
+BS</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> EQTS <span class="op">(</span>TNode <span class="op">*</span>ptr1<span class="op">,</span> TNode <span class="op">*</span>ptr2<span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">((</span>ptr1 <span class="op">==</span> NULL<span class="op">)||(</span>ptr2 <span class="op">==</span> NULL<span class="op">)){</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ptr1 <span class="op">==</span> ptr2<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="op">(</span>EQTS<span class="op">(</span>ptr1<span class="op">-&gt;</span>left<span class="op">,</span>ptr2<span class="op">-&gt;</span>left<span class="op">)</span> <span class="op">&amp;&amp;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        EQTS<span class="op">(</span>ptr1<span class="op">-&gt;</span>right<span class="op">,</span>ptr2<span class="op">-&gt;</span>right<span class="op">));</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">// &amp;&amp; (ptr1-&gt;data == ptr2-&gt;data) pro ekvivalenci BS</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="kopie-bs-rekurzivně">Kopie BS – rekurzivně</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>TNode <span class="op">*</span> CopyR <span class="op">(</span>TNode <span class="op">*</span>orig<span class="op">)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    TNode <span class="op">*</span>copy<span class="op">;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>orig <span class="op">!=</span> NULL<span class="op">){</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        copy <span class="op">=</span> <span class="op">(</span>TNode <span class="op">*)</span> malloc<span class="op">(</span><span class="kw">sizeof</span><span class="op">(</span>TNode<span class="op">));</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// zkontrolovat úspěšnost operace malloc</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        copy<span class="op">-&gt;</span>data <span class="op">=</span> orig<span class="op">-&gt;</span>data<span class="op">;</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        copy<span class="op">-&gt;</span>left <span class="op">=</span> CopyR<span class="op">(</span>orig<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        copy<span class="op">-&gt;</span>right <span class="op">=</span> CopyR<span class="op">(</span>orig<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> copy<span class="op">;</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> NULL<span class="op">;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="test-váhové-vyváženosti-bs">Test váhové vyváženosti BS</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dt">bool</span> TestWBT <span class="op">(</span>TNode <span class="op">*</span>ptr<span class="op">,</span> <span class="dt">int</span> <span class="op">*</span>count<span class="op">)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">bool</span> left_balanced<span class="op">,</span> right_balanced<span class="op">;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> left_count<span class="op">,</span> right_count<span class="op">;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>ptr <span class="op">!=</span> NULL<span class="op">){</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        left_balanced <span class="op">=</span> TestWBT<span class="op">(</span>ptr<span class="op">-&gt;</span>left<span class="op">,&amp;</span>left_count<span class="op">);</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        right_balanced <span class="op">=</span> TestWBT<span class="op">(</span>ptr<span class="op">-&gt;</span>right<span class="op">,&amp;</span>right_count<span class="op">);</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="op">*</span>count <span class="op">=</span> left_count <span class="op">+</span> right_count <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span>  <span class="op">(</span>left_balanced <span class="op">&amp;&amp;</span> right_balanced <span class="op">&amp;&amp;</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="op">(</span>abs<span class="op">(</span>left_count <span class="op">-</span> right_count<span class="op">)</span> <span class="op">&lt;=</span> <span class="dv">1</span><span class="op">));</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">*</span>count <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="kw">true</span><span class="op">;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="level-order-průchod">Level-order průchod</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> LevelOrder <span class="op">(</span>TDLList <span class="op">*</span>l<span class="op">,</span> TNode <span class="op">*</span>ptr<span class="op">)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> <span class="co">/* globální fronta ukazatelů */</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    InitQueue<span class="op">(&amp;</span>q1<span class="op">);</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    Add<span class="op">(&amp;</span>q1<span class="op">,</span>ptr<span class="op">);</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(!</span>IsEmpty<span class="op">(&amp;</span>q1<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        TNode <span class="op">*</span>aux <span class="op">=</span> Front<span class="op">(&amp;</span>q1<span class="op">);</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        Remove<span class="op">(&amp;</span>q1<span class="op">);</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="op">(</span>aux <span class="op">!=</span> NULL<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            DLL_InsertLast<span class="op">(</span>l<span class="op">,</span>aux<span class="op">-&gt;</span>data<span class="op">);</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            Add<span class="op">(&amp;</span>q1<span class="op">,</span>aux<span class="op">-&gt;</span>left<span class="op">);</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            Add<span class="op">(&amp;</span>q1<span class="op">,</span>aux<span class="op">-&gt;</span>right<span class="op">);</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="op">}</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="co">//while</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h2 id="vyhledávací-tabulky">Vyhledávací tabulky</h2>
+<ul>
+<li>Každá položka má zvláštní složku – klíč</li>
+<li>V tabulce s (ostrým) vyhledáváním je hodnota klíče jedinečná
+(neexistují dvě či více položek se stejnou hodnotou klíče).</li>
+</ul>
+<figure>
+<img src="images/table.png" alt="ADT TTable" />
+<figcaption aria-hidden="true">ADT TTable</figcaption>
+</figure>
+<h3 id="sekvenční-vyhledávání">Sekvenční vyhledávání</h3>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>bool <span class="kw">function</span> <span class="fu">Search</span> (TTable t<span class="op">,</span> TKey k)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    found ← <span class="kw">false</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    i ← <span class="dv">0</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> not found <span class="fu">and</span> (i <span class="op">&lt;</span> t<span class="op">.</span><span class="at">n</span>)<span class="op">:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> k <span class="op">=</span> t<span class="op">.</span><span class="at">array</span>[i]<span class="op">.</span><span class="at">key</span><span class="op">:</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            found ← <span class="kw">true</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span><span class="op">:</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            i ← i <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (found)</span></code></pre></div>
+<h3 id="sekvenční-vyhledávání-se-zarážkou">Sekvenční vyhledávání se
+zarážkou</h3>
+<p>Zarážka (sentinel, guard, stop-point): - Dovoluje vynechat test na
+konec pole. - Sníží efektivní kapacitu tabulky o jednu položku. -
+Vynecháním testu na konec se algoritmus zrychlí.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>bool <span class="kw">function</span> <span class="fu">SearchG</span> (TTable t<span class="op">,</span> TKey k)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    i ← <span class="dv">0</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    t<span class="op">.</span><span class="at">array</span>[t<span class="op">.</span><span class="at">n</span>]<span class="op">.</span><span class="at">key</span> ← k <span class="co">// vložení zarážky</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> k <span class="op">!=</span> t<span class="op">.</span><span class="at">array</span>[i]<span class="op">.</span><span class="at">key</span><span class="op">:</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        i ← i <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (i <span class="op">!=</span> t<span class="op">.</span><span class="at">n</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">// když našel až zarážku, tak vlastně nenašel ...</span></span></code></pre></div>
+<h3 id="binární-vyhledávání">Binární vyhledávání</h3>
+<ul>
+<li>Lze provést nad seřazenou množinou klíčů ve struktuře s náhodným
+přístupem (v poli).</li>
+<li>Připomíná metodu půlení intervalu pro hledání jediného kořene funkce
+v daném intervalu</li>
+<li>Výhoda: časová složitost vyhledávání je v nejhorším případě
+logaritmická: <strong>log<sub>2</sub>(n)</strong></li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>left ← <span class="dv">0</span> right ← t<span class="op">.</span><span class="at">n</span><span class="op">-</span><span class="dv">1</span> <span class="co">// levý index</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">// pravý index</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span><span class="op">:</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    middle <span class="fu">←</span> (left<span class="op">+</span>right) div <span class="dv">2</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> k <span class="op">&lt;</span> t<span class="op">.</span><span class="at">array</span>[middle]<span class="op">.</span><span class="at">key</span><span class="op">:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// hledaná položka je vlevo</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        right← middle <span class="op">-</span> <span class="dv">1</span> </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span><span class="op">:</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">// hledaná položka je vpravo</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        left ← middle <span class="op">+</span> <span class="dv">1</span> </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> (k <span class="op">!=</span> t<span class="op">.</span><span class="at">array</span>[middle]<span class="op">.</span><span class="at">key</span>) <span class="fu">and</span> (left ≤ right)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> (k <span class="op">=</span> t<span class="op">.</span><span class="at">array</span>[middle]<span class="op">.</span><span class="at">key</span>)</span></code></pre></div>
+<h4 id="dijkstrova-varianta">Dijkstrova varianta</h4>
+<p>Dijkstrova varianta umožňuje existenci více prvků se shodným
+klíčem</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>left ← <span class="dv">0</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>right← t<span class="op">.</span><span class="at">n</span><span class="op">-</span><span class="dv">1</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> right <span class="op">!=</span> (left<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">middle←</span>(left<span class="op">+</span>right) div <span class="dv">2</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> t<span class="op">.</span><span class="at">array</span>[middle]<span class="op">.</span><span class="at">key</span> ≤ k<span class="op">:</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        left ← middle</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span><span class="op">:</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        right← middle</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="cf">return</span> ((k <span class="op">=</span> t<span class="op">.</span><span class="at">array</span>[left]<span class="op">.</span><span class="at">key</span>)<span class="op">,</span> left)</span></code></pre></div>
+<p>Dijkstrova varianta končí <strong>vždy za stejnou dobu</strong>,
+určenou hodnotou dvojkového logaritmu počtu prvků.</p>
+<h3 id="vyhledávání-v-binárním-stromu">Vyhledávání v binárním
+stromu</h3>
+<ul>
+<li>Je-li vyhledávaný <strong>klíč roven kořeni</strong>, vyhledávání
+končí úspěšným vyhledáním.</li>
+<li>Je-li klíč <strong>menší</strong>, pokračuje vyhledávání v
+<strong>levém podstromu</strong>, je-li <strong>větší</strong>,
+pokračuje v <strong>pravém podstromu</strong>.</li>
+<li>Vyhledávání končí neúspěšně, pokud je prohledávaný (pod)strom
+<strong>prázdný</strong>.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bool <span class="kw">function</span> <span class="fu">Search</span> (TNode <span class="op">*</span>rootPtr<span class="op">,</span> TKey k)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> rootPtr <span class="op">=</span> NULL<span class="op">:</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="kw">false</span>) <span class="co">// nenašli jsme</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span><span class="op">:</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> rootPtr<span class="op">-&gt;</span>key <span class="op">=</span> k<span class="op">:</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="kw">true</span>) <span class="co">// našli jsme</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span><span class="op">:</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> k <span class="op">&lt;</span> rootPtr<span class="op">-&gt;</span>key<span class="op">:</span> <span class="co">// hledáme v levém podstromu</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="fu">Search</span>(rootPtr<span class="op">-&gt;</span>lPtr<span class="op">,</span>k))</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span><span class="op">:</span> <span class="co">// hledáme v pravém podstromu</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="fu">Search</span>(rootPtr<span class="op">-&gt;</span>rPtr<span class="op">,</span>k))</span></code></pre></div>
+<h4 id="bvs-insert-rekurzivní-zápis">BVS – Insert (rekurzivní
+zápis)</h4>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>TNode<span class="op">*</span> <span class="kw">function</span> <span class="fu">Insert</span> (TNode <span class="op">*</span>rootPtr<span class="op">,</span> TKey k<span class="op">,</span> TData d)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> rootPtr <span class="op">=</span> NULL<span class="op">:</span> <span class="co">// vytvoření nového uzlu</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fu">CreateNode</span>(k<span class="op">,</span>d)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span><span class="op">:</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> k <span class="op">&lt;</span> rootPtr<span class="op">-&gt;</span>key<span class="op">:</span> <span class="co">// jdeme vlevo</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            rootPtr<span class="op">-&gt;</span>lPtr ← <span class="fu">Insert</span>(rootPtr<span class="op">-&gt;</span>lPtr<span class="op">,</span>k<span class="op">,</span>d)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span><span class="op">:</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> rootPtr<span class="op">-&gt;</span>key <span class="op">&lt;</span> k<span class="op">:</span> <span class="co">// jdeme vpravo</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                rootPtr<span class="op">-&gt;</span>rPtr ← <span class="fu">Insert</span>(rootPtr<span class="op">-&gt;</span>rPtr<span class="op">,</span>k<span class="op">,</span>d)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span><span class="op">:</span> <span class="co">// přepíšeme stará data novými</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                rootPtr<span class="op">-&gt;</span>data← d</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> rootPtr</span></code></pre></div>
+<h4 id="bvs-rušení-uzlu-operace-delete">BVS Rušení uzlu – operace
+Delete</h4>
+<p>Uzel nezrušíme fyzicky, ale přepíšeme hodnotou takového uzlu, který
+lze zrušit snadno, a při přepisu nedojde k porušení uspořádání BVS.</p>
+<p>Vhodný uzel: - <strong>nejpravější uzel levého podstromu rušeného
+uzlu</strong> (maximum v levém podstromu) nebo - <strong>nejlevější uzel
+pravého podstromu rušeného uzlu</strong> (minimum v pravém
+podstromu).</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>TNode<span class="op">*</span> <span class="kw">function</span> <span class="fu">BVSMin</span> (TNode <span class="op">*</span>rootPtr)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">// funkce vrátí ukazatel na nejlevější uzel v daném</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">// neprázdném(!) stromu</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> rootPtr<span class="op">-&gt;</span>lPtr <span class="op">=</span> NULL<span class="op">:</span> <span class="co">// další levý už neexistuje</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> rootPtr</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span><span class="op">:</span> <span class="co">// pokračujeme vlevo</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="fu">BVSMin</span>(rootPtr<span class="op">-&gt;</span>lPtr)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>TNode<span class="op">*</span> <span class="kw">function</span> <span class="fu">BVSDelete</span> (TNode <span class="op">*</span>rootPtr<span class="op">,</span> int k)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> rootPtr <span class="op">=</span> NULL<span class="op">:</span> <span class="co">// prázdný (pod)strom</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> NULL</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span><span class="op">:</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> k <span class="op">&lt;</span> rootPtr<span class="op">-&gt;</span>key<span class="op">:</span> <span class="co">// rušený klíč je v levém podstromu</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>            rootPtr<span class="op">-&gt;</span>lPtr← <span class="fu">BVSDelete</span>(rootPtr<span class="op">-&gt;</span>lPtr<span class="op">,</span>k)</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> rootPtr</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span><span class="op">:</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> rootPtr<span class="op">-&gt;</span>key <span class="op">&lt;</span> k<span class="op">:</span> <span class="co">// rušený klíč je v pravém podstromu</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>                rootPtr<span class="op">-&gt;</span>rPtr← <span class="fu">BVSDelete</span>(rootPtr<span class="op">-&gt;</span>rPtr<span class="op">,</span>k)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> rootPtr</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span><span class="op">:</span> <span class="co">// nalezen uzel s daným klíčem</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> (rootPtr<span class="op">-&gt;</span>lPtr <span class="op">=</span> NULL) <span class="fu">and</span> (rootPtr<span class="op">-&gt;</span>rPtr <span class="op">=</span> NULL)<span class="op">:</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">free</span>(rootPtr) <span class="co">// rušený nemá žádného syna</span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">return</span> NULL</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span><span class="op">:</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">if</span> (rootPtr<span class="op">-&gt;</span>lPtr <span class="op">!=</span> NULL) <span class="fu">and</span> (rootPtr<span class="op">-&gt;</span>rPtr <span class="op">!=</span> NULL)<span class="op">:</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>                        <span class="co">// rušený má oba podstromy</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>                        TNode <span class="op">*</span>min ← <span class="fu">BVSMin</span>(rootPtr<span class="op">-&gt;</span>rPtr) <span class="co">// najdi minimum</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>                        rootPtr<span class="op">-&gt;</span>key← min<span class="op">-&gt;</span>key <span class="co">// nahraď</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>                        rootPtr<span class="op">-&gt;</span>data ← min<span class="op">-&gt;</span>data</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>                        rootPtr<span class="op">-&gt;</span>rPtr← <span class="fu">BVSDelete</span>(rootPtr<span class="op">-&gt;</span>rPtr<span class="op">,</span>min<span class="op">-&gt;</span>key)</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">return</span> rootPtr</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>                    <span class="cf">else</span><span class="op">:</span> <span class="co">// rušený má pouze jeden podstrom</span></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span> rootPtr<span class="op">-&gt;</span>lPtr <span class="op">=</span> NULL<span class="op">:</span> <span class="co">// rušený nemá levého syna</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>                            TNode <span class="op">*</span>onlyChild← rootPtr<span class="op">-&gt;</span>rPtr</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">else</span><span class="op">:</span> <span class="co">// rušený nemá pravého syna</span></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>                            TNode <span class="op">*</span>onlyChild← rootPtr<span class="op">-&gt;</span>lPtr</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">free</span>(rootPtr)</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">return</span> onlyChild</span></code></pre></div>
+<h3 id="avl-stromy">AVL stromy</h3>
+<ul>
+<li><strong>Výškově vyvážený strom</strong></li>
+<li>Je maximálně o 45 % vyšší než váhově vyvážený strom.</li>
+<li>Výškově vyvážený binární vyhledávací strom je strom, pro jehož každý
+uzel platí, že výška jeho dvou podstromů je stejná nebo se liší o
+1.</li>
+<li><strong>Kritický uzel</strong> – nejvzdálenější uzel od kořene, v
+němž je v důsledku vkládání nebo rušení porušená rovnováha.</li>
+</ul>
+<p>Každému uzlu přiřadíme váhu takto: - 0: zcela vyvážený uzel - -1:
+výška levého podstromu je o jedna větší - 1: výška pravého podstromu je
+o jedna větší</p>
+<p>Pokud v rámci operace Insert nebo Delete dojde ke změně váhy na
+hodnotu -2/2, je potřeba situaci napravit. Mohou nastat 4 různé situace,
+které se napravují různými způsoby: - <strong>LL</strong>: kritický uzel
+je příliš těžký vlevo a jeho levý syn je těžký vlevo -
+<strong>LR</strong>: kritický uzel je příliš těžký vlevo a jeho levý syn
+je těžký vpravo - <strong>RR</strong>: kritický uzel je příliš těžký
+vpravo a jeho pravý syn je těžký vpravo - <strong>RL</strong>: kritický
+uzel je příliš těžký vpravo a jeho pravý syn je těžký vlevo</p>
+<ul>
+<li>Situaci LL opravíme pravou rotací</li>
+<li>Situaci LR opravíme dvojitou rotací – levá rotace následovaná pravou
+rotací</li>
+<li>Situaci RR opravíme levou rotací</li>
+<li>Situaci RL opravíme dvojitou rotací – pravá rotace následovaná levou
+rotací</li>
+</ul>
+<h3 id="ab-stromy">(a,b)-stromy</h3>
+<p>(a,b)-strom pro parametry a ≥ 2, b ≥ 2a-1 je obecný vyhledávací
+strom, pro který navíc platí: 1. Kořen má 2 až b synů, ostatní vnitřní
+vrcholy a až b synů. 2. Všechny vnější vrcholy jsou ve stejné
+hloubce.</p>
+<p>(a,b)-strom s n klíči má hloubku <strong>Θ(log n)</strong>. Časová
+složitost: <strong>Θ(log n)</strong> (délka všech cest od kořene k
+listům je stejná) Obvykle se používají (a, 2a-1) nebo (a,2a)-stromy,
+časté parametry: <strong>(2,3)</strong> nebo <strong>(2,4)</strong></p>
+<p><img src="images/ab_insert.png" alt="Vkládání do (a,b)-stromu" />
+<strong>Varianta</strong>: zcela naplněné uzly jsou štěpeny už cestou
+dolů stromem, při vyhledávání místa, kam má být nový prvek vložen.</p>
+<figure>
+<img src="images/ab_delete.png" alt="Mazání v (a,b)-stromu" />
+<figcaption aria-hidden="true">Mazání v (a,b)-stromu</figcaption>
+</figure>
+<h3 id="llrb-stromy">LLRB stromy</h3>
+<p>LLRB strom je binární vyhledávací strom s vnějšími vrcholy, jehož
+hrany jsou obarveny červeně a černě. Přitom platí následující axiomy: 1.
+Neexistují dvě červené hrany bezprostředně nad sebou. 2. Jestliže z
+vrcholu vede dolů jediná červená hrana, pak vede doleva. 3. Hrany do
+listů jsou vždy obarveny černě. (To se hodí, jelikož listy jsou pouze
+virtuální, takže do nich neumíme barvu hrany uložit.) 4. Na všech
+cestách z kořene do listu leží stejný počet černých hran.</p>
+<p>LLRB strom – překlad (2,4) stromu na BVS s <strong>logaritmickou
+hloubkou</strong> a možností vyvažování.</p>
+<h4 id="překlad-24-stromu-na-llrb">Překlad (2,4)-stromu na LLRB</h4>
+<p>Každý vrchol (2,4)-stromu nahradíme konfigurací jednoho nebo více
+binárních vrcholů.</p>
+<p>Pro zachování korespondence mezi stromy zavedeme 2 barvy hran: -
+Červené hrany – spojují vrcholy tvořící 1 konfiguraci - Černé hrany –
+hrany mezi konfiguracemi (hrany původního stromu)</p>
+<p>Vrcholy označujeme dle počtu synů jako 2-vrchol, 3-vrchol,
+4-vrchol.</p>
+<p>Transformace 3-vrcholu – nahradíme 2 vrcholy a červená hrana musí
+vždy vést <strong>doleva</strong>.</p>
+<h4 id="vkládání-v-llrb">Vkládání v LLRB</h4>
+<ul>
+<li>Vyváženost stromu je udržována rotacemi, a to jen
+<strong>červených</strong> hran.</li>
+<li>Nový uzel vkládáme na nejnižší hladinu, připojujeme ke stromu pomocí
+červené hrany a v případě potřeby (červená hrana vedoucí doprava nebo 2
+červené hrany nad sebou) rotujeme.</li>
+</ul>
+<figure>
+<img src="images/llrb_balance.png" alt="Vkládání v LLRB" />
+<figcaption aria-hidden="true">Vkládání v LLRB</figcaption>
+</figure>
+<ul>
+<li>Při cestě stromem dolů <strong>štěpíme zcela zaplněné uzly</strong>
+(4-vrcholy)</li>
+<li>Štěpení je realizováno pomocí <strong>přebarvení</strong> – tím se
+uzel rozštěpí a prostřední klíč se stane součástí nadřazeného vrcholu
+(víme jistě, že se tam vleze, protože všechny 4-vrcholy rovnou
+štěpíme).</li>
+<li>Na nejnižší úrovni vložíme uzel.</li>
+<li>Štěpení může zanechat ve stromu špatné konfigurace červených hran
+(červená hrana vedoucí doprava, nebo 2 červené hrany nad sebou) –
+opravujeme pomocí <strong>rotací při cestě stromem zpět ke
+kořeni</strong> (jednoduché při využití rekurze)</li>
+</ul>
+<figure>
+<img src="images/llrb_insert.png" alt="Vkládání v LLRB" />
+<figcaption aria-hidden="true">Vkládání v LLRB</figcaption>
+</figure>
+<figure>
+<img src="images/llrb_delete.png" alt="Mazání v LLRB" />
+<figcaption aria-hidden="true">Mazání v LLRB</figcaption>
+</figure>
+<h3 id="tabulka-s-přímým-přístupem-tpp">Tabulka s přímým přístupem
+(TPP)</h3>
+<ul>
+<li>Implementace vyhledávací tabulky polem, ve které jsou klíče mapovány
+na indexy pole:
+<ul>
+<li>Ideální struktura z pohledu vyhledávání</li>
+<li>Bohužel obvykle nerealizovatelná</li>
+</ul></li>
+<li>Vyžaduje <strong>vzájemně jednoznačné zobrazení (bijekce)</strong>
+mapující každý prvek množiny klíčů K do množiny indexů pole H
+(sousedních adres v paměti).</li>
+<li>Vyhledávání: spočívá v přímém zjištění, zda na pozici klíče (indexu)
+dané tabulky je nebo není obsazeno.</li>
+<li>Časová složitost přístupu v TPP: <strong>Θ(1)</strong></li>
+<li><strong>Obtíž</strong>: nalezení <strong>vhodné mapovací
+funkce</strong>.</li>
+</ul>
+<h3 id="mapovací-funkce-1">Mapovací funkce</h3>
+<ul>
+<li><p>Nalezení vzájemně jednoznačného zobrazení (mapovací funkce) je
+velmi obtížné =&gt; je potřeba počítat s tím, že běžná mapovací funkce
+může <strong>různým klíčům přiřadit stejnou hodnotu</strong> (stejné
+místo v paměti).</p></li>
+<li><p><strong>Kolize</strong> – dva různé klíče jsou namapovány do
+stejného místa.</p></li>
+<li><p><strong>Synonyma</strong> – dva nebo více klíčů, které jsou
+namapovány do téhož místa.</p></li>
+<li><p>Nechť je dáno mapovací pole s rozsahem [0…N] nebo [1…N].</p></li>
+<li><p>Mapovací funkce transformuje klíč na index v daném
+rozsahu.</p></li>
+<li><p>Typicky lze rozdělit do dvou etap:</p>
+<ul>
+<li>převod klíče na přirozené číslo (N&gt;0),</li>
+<li>převod přirozeného čísla na hodnotu spadající do intervalu
+(nejčastěji s použitím operace modulo).</li>
+</ul></li>
+</ul>
+<h4 id="mapovací-funkce-požadavky">Mapovací funkce – požadavky</h4>
+<ul>
+<li><strong>Determinismus</strong> - Pro daný klíč vrátí vždy stejnou
+hodnotu.</li>
+<li><strong>Rovnoměrné (uniformní) rozložení</strong> - Na každé místo
+se mapuje přibližně stejně velké množství klíčů.</li>
+<li><strong>Využití celých vstupních dat</strong></li>
+<li><strong>Vyhnutí se kolizím podobných klíčů</strong> - V praxi bývá
+řada klíčů velice podobných.</li>
+<li><strong>Rychlý výpočet</strong></li>
+</ul>
+<h4 id="ukázka-mapovací-funkce-bkdr">Ukázka mapovací funkce – BKDR</h4>
+<div class="sourceCode" id="cb14"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">int</span> BKDRHash<span class="op">(</span><span class="dt">char</span><span class="op">*</span> str<span class="op">,</span> <span class="dt">unsigned</span> <span class="dt">int</span> length<span class="op">)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">unsigned</span> <span class="dt">int</span> seed <span class="op">=</span> <span class="dv">131</span><span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">unsigned</span> <span class="dt">int</span> hash <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">unsigned</span> <span class="dt">int</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> length<span class="op">;</span> str<span class="op">++,</span> i<span class="op">++)</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">{</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        hash <span class="op">=</span> <span class="op">(</span>hash <span class="op">*</span> seed<span class="op">)</span> <span class="op">+</span> <span class="op">(*</span>str<span class="op">);</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> hash<span class="op">;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h4 id="ukázka-mapovací-funkce-djb">Ukázka mapovací funkce – DJB</h4>
+<div class="sourceCode" id="cb15"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dt">unsigned</span> <span class="dt">long</span> DJBHash<span class="op">(</span><span class="dt">unsigned</span> <span class="dt">char</span> <span class="op">*</span>str<span class="op">)</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">unsigned</span> <span class="dt">long</span> hash <span class="op">=</span> <span class="dv">5381</span><span class="op">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">int</span> c<span class="op">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="op">(</span>c <span class="op">=</span> <span class="op">*</span>str<span class="op">++)</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">// hash * 33 + c</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        hash <span class="op">=</span> <span class="op">((</span>hash <span class="op">&lt;&lt;</span> <span class="dv">5</span><span class="op">)</span> <span class="op">+</span> hash<span class="op">)</span> <span class="op">+</span> c<span class="op">;</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> hash<span class="op">;</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h3 id="tabulka-s-rozptýlenými-položkami">Tabulka s rozptýlenými
+položkami</h3>
+<p>Tabulka s rozptýlenými položkami (TRP) sestává: - z mapovacího
+prostoru (pole) a - ze seznamů synonym.</p>
+<p>Seznam synonym (i prázdný) začíná na každém prvku mapovacího pole. -
+<strong>Explicitní zřetězení</strong> – adresa následníka je obsažena v
+jeho předchůdci (zřetězení záznamů). - <strong>Implicitní
+zřetězení</strong> – adresa následníka se získá pomocí funkce z adresy
+předchůdce (otevřená adresace).</p>
+<p>Princip vyhledávání v TRP spočívá ve dvou krocích: 1.
+<strong>Nalezení indexu prvku v poli</strong> k danému klíči pomocí
+mapovací funkce (na tomto indexu začíná seznam synonym, které se
+namapovaly do tohoto místa). 2. <strong>Sekvenční průchod</strong> tímto
+seznamem synonym (vyhledáváme položku s daným klíčem).</p>
+<p>Vyhledávání v TRP má <strong>index-sekvenční</strong> charakter.</p>
+<h4 id="trp-s-explicitním-zřetězením-synonym">TRP s explicitním
+zřetězením synonym</h4>
+<ul>
+<li>Seznam synonym je obvykle realizován jako <strong>lineární
+seznam</strong>.</li>
+<li>Maximální doba vyhledávání je pak dána délkou nejdelšího seznamu
+synonym – <strong>O(n)</strong>.</li>
+<li>Místo lineárních seznamů pro uložení synonym lze použít
+<strong>vyvažované binární vyhledávací stromy</strong>.</li>
+<li>Pak je časová složitost v nejhorším případě
+<strong>O(log<sub>2</sub> n)</strong>.</li>
+</ul>
+<h4 id="trp-s-implicitním-zřetězením-synonym">TRP s implicitním
+zřetězením synonym</h4>
+<ul>
+<li><p>TRP implementovaná polem, ve kterém jsou uloženy jak první prvky
+seznamů synonym, tak jejich další položky.</p></li>
+<li><p>Pro přístup k synonymům existují různé metody pro určení
+kroku:</p>
+<ul>
+<li>Lineární: <code>h(k, i) = (h(k) + C*i) % (Max+1)</code></li>
+<li>Kvadratická:
+<code>h(k, i) = (h(k) + C1*i + C2*i2) % (Max+1)</code></li>
+<li>S dvojí rozptylovací funkcí:
+<code>h(k, i) = (h1(k) + h2(k)*i) % (Max+1)</code></li>
+</ul></li>
+</ul>
+<p>kde i = 0, 1, 2, … – pokusy o vložení C, C1, C2– konstanty Max+1 –
+velikost pole</p>
+<h5 id="implicitní-zřetězení-s-pevným-krokem">Implicitní zřetězení s
+pevným krokem</h5>
+<ul>
+<li>Krok = 1: <strong>a(i+1) = a(i) + 1</strong></li>
+<li>Konec seznamu synonym je dán <strong>prvním volným prvkem</strong>,
+který se najde se zadaným krokem.</li>
+<li>Nové synonymum se vloží na první volné místo (<strong>na konec
+seznamu</strong>).</li>
+<li>Tabulka (pole) musí obsahovat <strong>alespoň jeden volný
+prvek</strong>. Efektivní kapacita je o 1 menší než počet položek.</li>
+<li>Tabulka je implementovaná <strong>kruhovým polem</strong>.</li>
+</ul>
+<figure>
+<img src="images/htable_overlap.png" alt="Překrývání seznamů synonym" />
+<figcaption aria-hidden="true">Překrývání seznamů synonym</figcaption>
+</figure>
+<h5 id="velikost-rozptylovacího-pole">Velikost rozptylovacího pole</h5>
+<ul>
+<li>Krok s hodnotou 1 má tendenci vytvářet shluky (angl.
+<strong>cluster</strong>).</li>
+<li>Výhodnější je krok <strong>větší než 1</strong>.</li>
+<li>Kdyby měl krok hodnotu prvočísla, které je nesoudělné s jakoukoli
+velikostí pole, pak by mohl postupně projít všemi prvky pole.</li>
+<li>Výhodnější ale je, aby <strong>hodnotu prvočísla měla velikost
+mapovacího pole</strong>. Pak jakýkoli krok dovolí projít všemi prvky
+mapovacího pole.</li>
+<li>Je vhodné dimenzovat velikost mapovacího pole TRP tak, aby bylo
+rovno prvočíslu.</li>
+</ul>
+<h5 id="trp-s-dvojí-rozptylovací-funkcí">TRP s dvojí rozptylovací
+funkcí</h5>
+<figure>
+<img src="images/htable_2hash.png"
+alt="TRP s dvojí rozptylovací funkcí" />
+<figcaption aria-hidden="true">TRP s dvojí rozptylovací
+funkcí</figcaption>
+</figure>
+<h5 id="brentova-varianta">Brentova varianta</h5>
+<ul>
+<li>Brentova varianta je <strong>varianta metody TRP se dvěma
+rozptylovacími funkcemi</strong>.</li>
+<li>Brentova varianta provádí <strong>při vkládání rekonfiguraci
+prvků</strong> pole s cílem <strong>investovat do vkládání</strong> a
+získat lepší průměrnou dobu vyhledání.</li>
+</ul>
+<figure>
+<img src="images/htable_brent.png" alt="Brentova varianta" />
+<figcaption aria-hidden="true">Brentova varianta</figcaption>
+</figure>
+<h5 id="hodnocení-trp-s-implicitním-zřetězením">Hodnocení TRP s
+implicitním zřetězením</h5>
+<ul>
+<li>Operaci <strong>Delete</strong> lze řešit pomocí
+<strong>zaslepení</strong> – vložením klíče, který nebude nikdy
+vyhledáván.</li>
+<li>TRP s implicitním zřetězením je vhodná v aplikacích, v nichž se
+<strong>operace Delete nepoužívá příliš často</strong>.</li>
+<li>Maximální kapacita TRP pro rozsah pole &lt;0..Max&gt; je
+<strong>Max</strong> (o 1 menší než počet prvků pole) – alespoň jeden
+prvek musí zůstat jako <strong>zarážka vyhledávání</strong>.</li>
+</ul>
+<h3 id="hodnocení-metod-vyhledávání">Hodnocení metod vyhledávání</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Metoda vyhledávání</th>
+<th>Časová složitost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sekvenční vyhledávání</td>
+<td><em>n</em></td>
+</tr>
+<tr class="even">
+<td>Binární vyhledávání v seřazeném poli</td>
+<td><em>log₂ n</em></td>
+</tr>
+<tr class="odd">
+<td>Binární vyhledávací strom</td>
+<td><em>log₂ n</em></td>
+</tr>
+<tr class="even">
+<td>BVS při degradaci na seznam</td>
+<td><em>n</em></td>
+</tr>
+<tr class="odd">
+<td>Vyvažovaný BVS (např. AVL)</td>
+<td><em>log₂ n</em></td>
+</tr>
+<tr class="even">
+<td>TRP</td>
+<td><em>1</em></td>
+</tr>
+<tr class="odd">
+<td>TRP při maximální kolizi klíčů</td>
+<td><em>n</em></td>
+</tr>
+<tr class="even">
+<td>TRP při maximální kolizi a vyváženém stromu</td>
+<td><em>log₂ n</em></td>
+</tr>
+</tbody>
+</table>
+<h3 id="hashovací-funkce">Hashovací funkce</h3>
+<p>Vlastnosti: - Vstup <strong>libovolné délky</strong> transformuje na
+výstup <strong>fixní délky</strong> - <strong>Determinismus</strong> –
+pro stejný vstup vrací vždy stejný výstup - <strong>Rychlost</strong> –
+není výpočetně náročné funkci vyčíslit - <strong>Malá změna na
+vstupu</strong> (např. jednoho bitu) způsobí <strong>velkou změnu na
+výstupu</strong> (tzv. Avalanche Effect) - Navržena tak, aby měla
+<strong>co nejméně kolizí</strong>.</p>
+<p>Využití hashovacích funkcí: - <strong>Zajištění integrity
+dat</strong> – kontrolní součty (sítě, archivy aj.) - <strong>Zajištění
+nepopiratelnosti dat</strong> – elektronický podpis = hash zprávy
+zašifrovaný privátním klíčem podepisujícího - <strong>Zajištění
+důvěrnosti dat</strong> - Ukládání hesel – operační systémy, informační
+systémy, aplikace (při přihlášení se hash zadaného hesla porovná s
+uloženým hashem) - Součást kryptografických protokolů (šifrovací
+protokoly TLS/SSL) - <strong>Rychlá identifikace souborů</strong> –
+souborové systémy, distribuované systémy, forenzní analýza digitálních
+dat - <strong>Tabulky s rozptýlenými položkami</strong> (hashovací
+tabulky)</p>
+<h4 id="kryptografické-hashovací-funkce">Kryptografické hashovací
+funkce</h4>
+<p>Aby byla funkce použitelná pro kryptografické účely, musí být
+výpočetně nezvládnutelné v „rozumném čase“: - Z výstupu spočítat původní
+vstup (<strong>1st Preimage Resistance</strong>) - Pro daný hash najít
+další vstup, který povede na stejný hash (<strong>2nd Preimage
+Resistance</strong>) - Najít dva vstupy, které povedou ke kolizi –
+stejnému hashi (<strong>Collision resistence</strong>)</p>
+<h4 id="další-typy-hashovacích-funkcí">Další typy hashovacích
+funkcí</h4>
+<ul>
+<li><strong>Fuzzy hashing / Similarity hashing</strong> – analýza
+podobnosti: Je naopak žádoucí, aby dva podobné vstupy měly podobný hash
+<ul>
+<li>SSDEEP, sdhash, TLSH</li>
+</ul></li>
+<li><strong>Klouzavé hashovací funkce</strong> (rolling hash functions)
+– Efektivní výpočet hodnot posouvajícího se okna nad vstupními daty
+<ul>
+<li>Adler32, CRC, Rabin-Karpův hash, Spamsum</li>
+</ul></li>
+<li><strong>Percepční hashování</strong> (perceptual hashing) – detekce
+podobných multimediálních souborů (obrázky, zvuk)
+<ul>
+<li>pHash, dHash, aHash</li>
+</ul></li>
+</ul>
+<h2 id="řazení">Řazení</h2>
+<p><strong>Třídění</strong> (<strong>sorting</strong>) položek
+neuspořádané množiny je uspořádání do tříd podle hodnoty daného atributu
+– klíče položky.</p>
+<p><strong>Řazení</strong> (<strong>ordering</strong>,
+<strong>sequencing</strong>) je uspořádání položek podle <strong>relace
+lineárního uspořádání</strong> nad klíči.</p>
+<p><strong>Setřídění</strong> (<strong>merging</strong>) je vytváření
+souboru seřazených položek sjednocením několika souborů položek téhož
+typu, které jsou již seřazeny.</p>
+<h3 id="vlastnosti-řadicích-algoritmů">Vlastnosti řadicích
+algoritmů</h3>
+<ul>
+<li><strong>Přirozenost</strong> – algoritmus se chová přirozeně pokud:
+<ul>
+<li>je doba potřebná k seřazení náhodně uspořádaného pole větší, než k
+seřazení již uspořádaného pole</li>
+<li>a doba potřebná k seřazení opačně seřazeného pole je větší, než doba
+k seřazení náhodně uspořádaného pole.</li>
+<li>Jinak říkáme, že se algoritmus nechová přirozeně.</li>
+</ul></li>
+<li><strong>Stabilita</strong> vyjadřuje, zda mechanismus algoritmu
+zachovává relativní pořadí klíčů se stejnou hodnotou.</li>
+</ul>
+<h3 id="řazení-podle-více-klíčů">Řazení podle více klíčů</h3>
+<p>Problém lze řešit třemi způsoby: - Složená relace uspořádání -
+Opakované řazení - Aglomerovaný klíč</p>
+<h4 id="aglomerovaný-klíč">Aglomerovaný klíč</h4>
+<p>Uspořádaná N-tice klíčů se konvertuje na vhodný typ, nad nímž je
+definována relace uspořádání.</p>
+<p>Příklad aglomerovaného klíče: Rodné číslo</p>
+<h3 id="řazení-polí-bez-přesunu-položek">Řazení polí bez přesunu
+položek</h3>
+<p>V případě dlouhých položek jsou přesuny časově velmi náročné =&gt;
+řazení polí bez přesunu položek.</p>
+<p>Implementace: - K řazenému poli vytvoříme <strong>pomocné
+pole</strong> (tzv. pořadník, location). - Po dokončení řazení pořadník
+udává, v jakém pořadí by měly být seřazeny položky původního pole (na
+první pozici pořadníku je index prvního prvku seřazeného pole atd.).</p>
+<p>Chceme-li mít na konci <strong>seřazené pole</strong>: - Přeskládáme
+prvky do výstupního pole s využitím pořadníku. - Prvky zřetězíme a
+přeskládáme do výstupního pole, nebo přeskládáme v poli samotném.</p>
+<h3 id="klasifikace-algoritmů-řazení">Klasifikace algoritmů řazení</h3>
+<ul>
+<li>Podle <strong>přístupu k paměti</strong>:
+<ul>
+<li>metody vnitřního řazení (<strong>řazení polí</strong>) – přímý
+(náhodný) přístup</li>
+<li>metody vnějšího řazení (<strong>řazení souborů a seznamů</strong>) –
+sekvenční přístup</li>
+</ul></li>
+<li>Podle <strong>typu procesoru</strong>:
+<ul>
+<li><strong>sériové</strong> (jeden procesor) – jedna operace v daném
+okamžiku</li>
+<li><strong>paralelní</strong> (více procesorů) – více souběžných
+operací</li>
+</ul></li>
+<li>Podle <strong>principu</strong> řazení:
+<ul>
+<li>Princip <strong>výběru</strong> (selection) – přesouvají
+maximum/minimum do výstupní posloupnosti.</li>
+<li>Princip <strong>vkládání</strong> (insertion) – vkládají postupně
+prvky do seřazené výstupní posloupnosti.</li>
+<li>Princip <strong>rozdělování</strong> (partition) – rozdělují
+postupně množinu prvků na dvě podmnožiny tak, že prvky jedné jsou menší
+než prvky druhé.</li>
+<li>Princip <strong>slučování</strong> (merging) – setřiďují se postupně
+dvě seřazené posloupnosti do jedné.</li>
+<li>Jiné principy …</li>
+</ul></li>
+</ul>
+<h3 id="řazení-na-principu-výběru-select-sort">Řazení na principu výběru
+(Select sort)</h3>
+<ul>
+<li>Jádrem metody je nalezení extrémního prvku v zadaném segmentu pole a
+jeho výměna na konec (začátek) seřazené části pole.</li>
+<li>Takto je nalezeno <em>MAX-1</em> minim (maxim), která jsou umístěna
+na svoji pozici.</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>procedure <span class="fu">SelectSort</span> (TArray A)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="fu">←</span> (<span class="dv">0</span><span class="op">,</span> MAX<span class="op">-</span><span class="dv">2</span>)<span class="op">:</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        indexMin ← i <span class="co">// Poloha pomocného minima</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        min ← A[i] <span class="co">// Pomocné minimum</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="fu">←</span> (i<span class="op">+</span><span class="dv">1</span><span class="op">,</span> MAX<span class="op">-</span><span class="dv">1</span>)<span class="op">:</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> min <span class="op">&gt;</span> A[j]<span class="op">:</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                min ← A[j]</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                indexMin ← j</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        A[i] <span class="op">&lt;-&gt;</span> A[indexMin]</span></code></pre></div>
+<ul>
+<li>Metoda je <strong>nestabilní</strong>. Vyměněný první prvek se může
+dostat za prvek se shodnou hodnotou.</li>
+<li>Má <strong>kvadratickou časovou složitost</strong>.</li>
+</ul>
+<h3 id="metoda-bublinového-výběru-bubble-sort">Metoda bublinového výběru
+– Bubble sort</h3>
+<ul>
+<li>Princip stejný jako u metody Select sort.</li>
+<li>Liší se metodou nalezení extrému a jeho přesunu:
+<ul>
+<li>Porovnává se každá dvojice a v případě obráceného uspořádání se
+přehodí.</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>procedure <span class="fu">BubbleSort</span> (TArray A)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// průchod zprava – minimum doleva</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    i ← <span class="dv">1</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">do</span><span class="op">:</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>        finish ← <span class="kw">true</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="fu">←</span> (MAX<span class="op">-</span><span class="dv">1</span><span class="op">,</span> i)<span class="op">-</span><span class="dv">1</span><span class="op">:</span> <span class="co">// bublinový cyklus</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> A[j<span class="op">-</span><span class="dv">1</span>] <span class="op">&gt;</span> A[j]<span class="op">:</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>                A[j<span class="op">-</span><span class="dv">1</span>] <span class="op">&lt;-&gt;</span> A[j]</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>                finish ← <span class="kw">false</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>        i ← i<span class="op">+</span><span class="dv">1</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> (not finish) <span class="fu">and</span> (i <span class="op">&lt;</span> MAX)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>procedure <span class="fu">BubbleSort2</span> (TArray A)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// průchod zleva – maximum doprava</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    auxN ← MAX<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">continue</span> ← <span class="kw">true</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="cf">continue</span> <span class="fu">and</span> (auxN <span class="op">&gt;</span> <span class="dv">0</span>)<span class="op">:</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span> ← <span class="kw">false</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="fu">←</span> (<span class="dv">0</span><span class="op">,</span> auxN<span class="op">-</span><span class="dv">1</span>)<span class="op">:</span> <span class="co">// bublinový cyklus</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> A[i<span class="op">+</span><span class="dv">1</span>] <span class="op">&lt;</span> A[i]<span class="op">:</span> </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>                A[i<span class="op">+</span><span class="dv">1</span>] <span class="op">&lt;-&gt;</span> A[i]</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span> ← <span class="kw">true</span> <span class="co">// výměna – nelze skončit</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        auxN ← auxN<span class="op">-</span><span class="dv">1</span></span></code></pre></div>
+<ul>
+<li>Bublinový výběr je metoda <strong>stabilní</strong> a přirozená. Je
+to jedna z mála metod použitelná pro vícenásobné řazení podle více
+klíčů!</li>
+<li>Má časovou složitost <strong>kvadratickou</strong>.</li>
+<li>Je to nejrychlejší metoda v případě, že pole je již seřazené!</li>
+</ul>
+<h4 id="bubble-sort-varianty">Bubble sort – varianty</h4>
+<p>Od Bubble sortu byla odvozena řada vylepšených variant: -
+<strong>Ripple sort</strong>: pamatuje si polohu první výměny a je-li
+větší než 1, neprochází dvojicemi, u nichž je jasné, že se nebudou
+vyměňovat. - <strong>Shaker sort</strong>: střídá směr probublávání
+zleva a zprava (používá houpačkovou metodu) a skončí uprostřed. -
+<strong>Shuttle sort</strong>: zavede při výměně dvojice menší prvek na
+své místo a teprve pak pokračuje dál. Končí tím, že nevymění nejpravější
+dvojici.</p>
+<h3 id="řazení-hromadou-heap-sort">Řazení hromadou – Heap sort</h3>
+<p><strong>Hromada (halda, heap)</strong> je struktura stromového typu,
+pro niž platí, že mezi otcovským uzlem a všemi jeho synovskými uzly
+platí <strong>stejná relace uspořádání</strong>.</p>
+<p>Nejčastější případ hromady je <strong>binární hromada</strong>, která
+je založená na binárním stromu, pro který navíc platí: - Všechny hladiny
+kromě poslední jsou plně obsazené. - Poslední hladina je zaplněna
+zleva.</p>
+<h4 id="rekonstrukce-hromady">Rekonstrukce hromady</h4>
+<p>Významnou operací nad hromadou je její <strong>rekonstrukce</strong>
+poté, co se poruší pravidlo hromady v jednom uzlu.</p>
+<p>Nejvýznamnějším případem je porušení v kořeni.</p>
+<p>Operace <strong>Sift</strong> (prosetí nebo také zatřesení hromadou):
+- Operace, která znovuustaví hromadu porušenou v kořeni. - Prvek z
+kořene se postupnými výměnami <strong>propadne</strong> na své místo a
+do kořene se dostane prvek splňující pravidla hromady. - Operace má v
+nejhorším případě složitost <strong>log<sub>2</sub> n</strong>.</p>
+<h4 id="implementace-hromady-polem">Implementace hromady polem</h4>
+<p>Protože musí být zaplněny všechny hladiny kromě poslední a poslední
+musí být zaplněna zleva, můžeme strom ukládat do pole <strong>po
+hladinách</strong>.</p>
+<p>Pak <strong>platí pro otcovský a synovské uzly vztah</strong>: když
+je otcovský uzel na indexu <em>i</em>, pak je levý syn na indexu
+<em>2i+1</em> a pravý syn na indexu <em>2i+2</em>.</p>
+<h5 id="vytvoření-hromady">Vytvoření hromady</h5>
+<ul>
+<li>Začneme s <strong>nejnižším a nejpravějším otcovským uzlem</strong>
+– ten je kořenem hromady (podstromu), která je porušená v kořeni.
+Operací Sift opravíme.</li>
+<li>Dále <strong>postupujeme po všech otcovských uzlech doleva a
+nahoru</strong> až k hlavnímu kořeni.</li>
+</ul>
+<p>Má-li pole <em>MAX</em> prvků (indexováno od <em>0</em> do
+<em>MAX-1</em>), pak nejnižší a nejpravější otcovský uzel odpovídající
+hromady má index: <em>(MAX div 2) – 1</em>. Následující otcovské uzly
+leží na <strong>předchozích</strong> indexech.</p>
+<p>Celkem musíme opravit n/2 hromad, celé ustavení hromady zvládneme v
+čase **n/2*log<sub>2</sub>n**.</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>procedure <span class="fu">HeapSort</span> (TArray A)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// ustavení hromady</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    left <span class="fu">←</span> (MAX div <span class="dv">2</span>)<span class="op">-</span><span class="dv">1</span> <span class="co">// nejnižší a nejpravější otec</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    right← MAX<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="fu">←</span> (left<span class="op">,</span> <span class="dv">0</span>)<span class="op">:</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">SiftDown</span>(A<span class="op">,</span>i<span class="op">,</span>right)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">// vlastní cyklus Heap-sortu</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> right <span class="fu">←</span> (MAX<span class="op">-</span><span class="dv">1</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">:</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>        A[<span class="dv">0</span>] A[right]</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">// výměna kořene s akt. posledním prvkem</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">SiftDown</span>(A<span class="op">,</span><span class="dv">0</span><span class="op">,</span>right<span class="op">-</span><span class="dv">1</span>) <span class="co">// znovuustavení hromady</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>procedure <span class="fu">SiftDown</span> (TArray A<span class="op">,</span> int left<span class="op">,</span> int right)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">// left je index kořenového uzlu, který porušuje heap,</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">// right je index posledního prvku heapu</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    i ← left</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    j ← <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">1</span> <span class="co">// index levého syna</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    temp ← A[i] <span class="co">// pomocná proměnná</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">continue</span> ← j ≤ right <span class="co">// řídicí proměnná cyklu</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="cf">continue</span><span class="op">:</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> j <span class="op">&lt;</span> right<span class="op">:</span> <span class="co">// uzel má oba syny</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> A[j] <span class="op">&lt;</span> A[j<span class="op">+</span><span class="dv">1</span>] <span class="co">// pravý syn je větší</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>                j← j<span class="op">+</span><span class="dv">1</span> <span class="co">// pokračujeme tedy s ním</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> temp ≥ A[j]<span class="op">:</span> <span class="co">// temp našel své místo = konec</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span> ← <span class="kw">false</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span><span class="op">:</span> <span class="co">// temp padá níž, A[j] jde o úroveň výš</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>            A[i]← A[j]</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>            i ← j <span class="co">// syn je otcem v dalším cyklu</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>            j← <span class="dv">2</span><span class="op">*</span>i<span class="op">+</span><span class="dv">1</span> <span class="co">// nový levý syn</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span> ← j ≤ right <span class="co">// pokračujeme až na list</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    A[i]← temp <span class="co">// konečná pozice „propadajícího“ kořene</span></span></code></pre></div>
+<h4 id="zhodnocení">Zhodnocení</h4>
+<ul>
+<li>Heap sort je řadicí metoda s <strong>linearitmickou
+složitostí</strong>, protože sift umí rekonstruovat hromadu (najít
+extrém mezi N prvky) s logaritmickou složitostí.</li>
+<li>Heap sort je <strong>nestabilní</strong> a <strong>nechová se
+přirozeně</strong>.</li>
+</ul>

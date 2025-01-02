@@ -1,3 +1,5 @@
+[PDF verze](ial-exam.pdf)
+
 ## Úvod
 
 ### Algoritmus
@@ -114,7 +116,7 @@ void HeightBT (TNode *ptr, int *max)
 }
 ```
 
-alebo
+nebo
 
 ```c
 int max (int n1, int n2)
@@ -373,7 +375,7 @@ nebo rušení porušená rovnováha.
 
 Každému uzlu přiřadíme váhu takto:
 - 0: zcela vyvážený uzel
-- 1: výška levého podstromu je o jedna větší
+- -1: výška levého podstromu je o jedna větší
 - 1: výška pravého podstromu je o jedna větší
 
 Pokud v rámci operace Insert nebo Delete dojde ke změně váhy na hodnotu -2/2, je potřeba situaci napravit.
@@ -436,7 +438,7 @@ Transformace 3-vrcholu – nahradíme 2 vrcholy a červená hrana musí vždy v�
 
 ![Vkládání v LLRB](images/llrb_insert.png)
 
-![Vkládání v LLRB](images/llrb_delete.png)
+![Mazání v LLRB](images/llrb_delete.png)
 
 ### Tabulka s přímým přístupem (TPP)
 - Implementace vyhledávací tabulky polem, ve které jsou klíče mapovány na indexy pole:
@@ -723,3 +725,69 @@ Od Bubble sortu byla odvozena řada vylepšených variant:
 Nejčastější případ hromady je **binární hromada**, která je založená na binárním stromu, pro který navíc platí:
 - Všechny hladiny kromě poslední jsou plně obsazené.
 - Poslední hladina je zaplněna zleva.
+
+#### Rekonstrukce hromady
+Významnou operací nad hromadou je její **rekonstrukce** poté, co se poruší pravidlo hromady v jednom uzlu.
+
+Nejvýznamnějším případem je porušení v kořeni.
+
+Operace **Sift** (prosetí nebo také zatřesení hromadou):
+  - Operace, která znovuustaví hromadu porušenou v kořeni.
+  - Prvek z kořene se postupnými výměnami **propadne** na své místo a do kořene se dostane prvek splňující pravidla hromady.
+  - Operace má v nejhorším případě složitost **log~2~ n**. 
+
+#### Implementace hromady polem
+Protože musí být zaplněny všechny hladiny kromě poslední a poslední musí být zaplněna zleva, můžeme strom ukládat do pole **po hladinách**.
+
+Pak **platí pro otcovský a synovské uzly vztah**: 
+když je otcovský uzel na indexu *i*, pak je levý syn na indexu *2i+1* a pravý syn na indexu *2i+2*.
+
+##### Vytvoření hromady
+- Začneme s **nejnižším a nejpravějším otcovským uzlem** – ten je kořenem hromady (podstromu), která je porušená v kořeni. Operací Sift opravíme.
+- Dále **postupujeme po všech otcovských uzlech doleva a nahoru** až k hlavnímu kořeni.
+
+
+Má-li pole *MAX* prvků (indexováno od *0* do *MAX-1*), pak nejnižší a nejpravější otcovský uzel odpovídající hromady má index: *(MAX div 2) – 1*. Následující otcovské uzly leží na **předchozích** indexech.
+
+Celkem musíme opravit n/2 hromad, celé ustavení hromady zvládneme v čase **n/2*log~2~n**.
+
+```js
+procedure HeapSort (TArray A)
+    // ustavení hromady
+    left ← (MAX div 2)-1 // nejnižší a nejpravější otec
+    right← MAX-1
+    for i ← (left, 0):
+        SiftDown(A,i,right)
+
+    // vlastní cyklus Heap-sortu
+    for right ← (MAX-1, 1):
+        A[0] A[right]
+        // výměna kořene s akt. posledním prvkem
+        SiftDown(A,0,right-1) // znovuustavení hromady
+```
+
+```js
+procedure SiftDown (TArray A, int left, int right)
+    // left je index kořenového uzlu, který porušuje heap,
+    // right je index posledního prvku heapu
+    i ← left
+    j ← 2*i+1 // index levého syna
+    temp ← A[i] // pomocná proměnná
+    continue ← j ≤ right // řídicí proměnná cyklu
+    while continue:
+        if j < right: // uzel má oba syny
+            if A[j] < A[j+1] // pravý syn je větší
+                j← j+1 // pokračujeme tedy s ním
+        if temp ≥ A[j]: // temp našel své místo = konec
+            continue ← false
+        else: // temp padá níž, A[j] jde o úroveň výš
+            A[i]← A[j]
+            i ← j // syn je otcem v dalším cyklu
+            j← 2*i+1 // nový levý syn
+            continue ← j ≤ right // pokračujeme až na list
+    A[i]← temp // konečná pozice „propadajícího“ kořene
+```
+
+#### Zhodnocení
+- Heap sort je řadicí metoda s **linearitmickou složitostí**, protože sift umí rekonstruovat hromadu (najít extrém mezi N prvky) s logaritmickou složitostí.
+-  Heap sort je **nestabilní** a **nechová se přirozeně**.
