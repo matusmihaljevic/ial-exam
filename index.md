@@ -1,5 +1,3 @@
-[PDF verze](ial-exam.pdf)
-
 ## Úvod
 
 ### Algoritmus
