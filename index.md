@@ -1,3 +1,10 @@
+- [Úvod](#úvod)
+- [Lineární abstraktní datové typy](#lineární-abstraktní-datové-typy)
+- [Zásobník a fronta](#zásobník-a-fronta)
+- [Stromové datové struktury](#stromové-datové-struktury)
+- [Vyhledávací tabulky](#vyhledávací-tabulky)
+- [Řazení](#řazení)
+
 # Úvod
 
 ## Algoritmus
