@@ -4,6 +4,7 @@
 - [Stromové datové struktury](#stromové-datové-struktury)
 - [Vyhledávací tabulky](#vyhledávací-tabulky)
 - [Řazení](#řazení)
+- [Vyhledávání v textu](#vyhledávání-v-textu)
 
 # Úvod
 
@@ -1126,3 +1127,273 @@ end for
 
 ## Zhodnocení řadicích metod
 ![Zhodnocení řadicích metod](images/sorting_review.png)
+
+# Vyhledávání v textu
+Budeme používat značení:
+- Vyhledávaný vzorek (pattern): *p*
+    - i-tý znak vzorku: *p[i]*
+    - délka vzorku: mnebo *pl*
+- Prohledávaný text: *t*
+    - i-tý znak prohledávaného textu: *t[i]*
+    - délka prohledávaného textu: *n* nebo *tl*
+
+## Klasický algoritmus
+- Naivní algoritmus, brute-force algoritmus
+- Přikládá vzorek k textu zleva doprava.
+- Porovnává symboly textu a vzorku zleva doprava.
+- Při **neshodě** symbolů:
+    - Posune vzorek o jednu pozici doprava.
+    - Porovnává symboly zleva doprava, od prvního symbolu vzorku odpovídajícího symbolu v textu.
+
+```js
+int function Match (char *t, char *p, int pl, int tl)
+    // vrací index prvního výskytu, při neúspěchu vrátí hodnotu TL
+    auxStartT ← 0 // inicializace
+    posT ← 0
+    posP← 0
+    while posT < tl and posP < pl:
+        if t[posT] = p[posP]: // posun po vzorku v řetězci
+            posT← posT + 1
+            posP ← posP + 1
+        else: // posun zač. řetězce a nové porovnání
+            auxStartT ← auxStartT + 1
+            posT ← auxStartT
+            posP ← 0
+    if posP = pl:
+        return auxStartT // našel
+    else:
+        return posT // nenašel a vrátil hodnotu TL
+```
+
+Algoritmus vyžaduje návraty v textu.
+
+
+## Knuth-Morris-Prattův algoritmus (KMP)
+- Využívá princip **konečného automatu**.
+- Přikládá vzorek k textu zleva doprava.
+- Porovnává symboly textu a vzorku zleva doprava.
+- Při **neshodě** symbolů:
+    - **Nevrací se v textu zpět**, ale vyzkouší **další možné přiložení vzorku**, které odpovídá přečtené části textu.
+    - **Symbol textu,** na kterém došlo k neshodě, **porovná s jiným vhodným symbolem vzorku**.
+
+### Vyhledávací automat
+Nechť **Σ** je abeceda a **o** je kardinalita abecedy **Σ**. Pak z každého uzlu vychází **o** orientovaných hran, oceněných jednotlivými znaky abecedy.
+
+Vyhledávací automat používá dva typy hran:
+- **Dopředné hrany**:
+    - Označeny symboly vzorku.
+    - Použijí se, pokud se v textu nachází **daný symbol**.
+- **Zpětné hrany**:
+    - Použijí se, pokud se v textu nachází **jiný symbol**.
+    - Po použití zpětné hrany se **nečte nový symbol**, ale provede se **další krok se stejným symbolem**.
+    - Je-li potřeba jít zpět ze stavu 0, je načten nový znak z textu.
+
+Reprezentace KMP automatu:
+- Vzorek P – udává označení dopředných hran.
+- **Vektor FAIL** – udává cílový stav zpětných hran. `FAIL[0] = -1` reprezentuje čtení nového znaku v textu.
+
+#### Jak určit cílový stav?
+- Potřebujeme najít další možné přiložení vzorku a žádné nevynechat.
+- Hledáme nejdelší možný **vlastní prefix vzorku**, který odpovídá **sufixu**, který jsme úspěšně přečetli.
+
+### Vektor FAIL
+```js
+procedure KMPFindFail (char *p, int pl, int fail[pl])
+// varianta pro vyhledávání jednoho výskytu vzorku
+fail[0]← -1
+for k ← (1, PL-1):
+    r ← fail[k-1]
+    while (r ≥ 0) and (P[r] ≠ P[k-1]):
+    // použit zkratový booleovský výraz!
+        r ← fail[r]
+    fail[k]← r + 1
+```
+
+Celkový počet porovnání je *(2m-3)*. To představuje **lineární** časovou složitost.
+
+### Algoritmus
+```js
+int KMPMatch(char *t, char *p, int pl, int tl, int fail[pl])
+    posT← 0
+    posP ← 0
+    while (posT < tl and posP < pl):
+        if posP < 0: // žádná shoda, posun v textu dopředu
+            posP ← 0
+            posT ← posT + 1
+        else:
+        if (t[posT] = p[posP]): // shody, inkrementace
+            posT ← posT + 1
+            posP ← posP + 1
+        else: // neshoda, zpětná hrana
+            posP ← fail[posP]
+    if posP = pl:
+        return posT - pl // našel, vrací začátek vzorku
+    else:
+        return posT // nenašel, vrací hodnotu TL
+```
+
+### Zhodnocení
+- Konstrukce automatu: O(m)
+- Vyhledávání – maximálně 2n porovnání: O(n)
+- Celkově: **O(n+m)**
+- KMP **nejde v textu zpět**.
+
+## Boyer-Mooreův algoritmus
+- Pokouší se o větší skoky v textu.
+- Přikládá vzorek k textu **zleva doprava**.
+- **Porovnává** symboly textu a vzorku **zprava doleva** - díky tomu nemusí být některé symboly textu vůbec porovnány se symboly vzorku (lze je přeskočit).
+- Při **neshodě** symbolů využívá **dvě pravidla**:
+    - První je odvozeno od nejpravějšího výskytu symbolu z textu ve vzorku.
+    - Druhé je odvozeno od opakujících se podřetězců ve vzorku.
+- Narazíme-li v textu na **znak**, který se ve vzorku **vůbec nevyskytuje**, můžeme vzorek **posunout** až za tuto pozici v textu.
+
+### 1. pravidlo - bad character rule
+- Odvozena od **symbolu**, který se nachází **v textu a nesouhlasí** se symbolem vzorku.
+- Určuje **počet pozic**, o které lze při nesouhlasu porovnávaného vzorku s**kočit dopředu**.
+
+**Délka skoku** závisí na tom, **kde** ve vzorku **se nachází symbol z textu**, pro který došlo k neshodě:
+- pokud se ***t~j~* vůbec nevyskytuje** ve vzorku *P*, lze **poskočit o *m* pozic.**
+- v případě, že se ***t~j~* ve vzorku nachází**, je potřeba provést **nejmenší možný skok** – odvozený od **nejpravějšího výskytu** znaku ve vzorku.
+
+```js
+procedure ComputeJumps (char *p, int CharJump[cardABC])
+    // stanovení hodnot pole CharJump, určující posuv vzorku
+    for i ← (0, cardABC-1):
+        ch ← char(i) // pole bude indexováno znakem
+        CharJump[ch] ← length(p)
+    for k ← (0, length(p)-1):
+        CharJump[p[k]]← length(p)-1-k // viz (m-1-k) na předch. snímku
+```
+
+### 2. pravidlo - good suffix rule
+- Využívá **opakující se podřetězce** v řetězci.
+- Pokud úspěšně porovnáme několik symbolů vzorku a textu a potom narazíme na neshodu, potom další smysluplné přiložení vzorku k textu je takové, které k **přečtenému sufixu** přiloží **další nejpravější výskyt tohoto podřetězce** ve vzorku.
+- Navíc se bere v úvahu **symbol, který předchází danému podřetězci** – ten musí být jiný, než při neshodě, jinak by ani toto přiložení nemohlo uspět.
+
+### Algoritmus
+```js
+int BMA (char *p, char *t, int CharJump[cardABC], int MatchJump[lengthP])
+    // funkce vrací index prvního výskytu vzorku v daném textu
+    posT← length(p) - 1
+    posP ← length(p) - 1
+    while posT < length(t) and posP ≥ 0:
+        if t[posT] = p[posP]:
+            posT ← posT - 1
+            posP ← posP - 1
+        else:
+            posT ← posT + max(CharJump[t[posT]], MatchJump[posP])
+            posP ← length(p)-1
+    if posP < 0:
+        return posT + 1 // shoda – vrací index
+    else
+        return length(t) // shoda se nenašla
+```
+
+### Zhodnocení
+Chování BMA závisí na kardinalitě abecedy a na opakování podřetězců ve vzorku.
+
+Nejhorší případ:
+- Pokud se vzorek v textu nevyskytuje: **O(n+m)**
+- Pokud se vzorek v textu vyskytuje a hledáme všechny výskyty: **O(mn)**
+
+Pro přirozené jazyky mnohem efektivnější než předchozí algoritmy.
+
+## Rabin-Karpův algoritmus
+- Vyhledávání vzorku založené na **hashování**.
+- Potřebujeme hashovací funkci, která **m-ticím znaků** (*m* je délka vzorku)
+**přiřazuje čísla** z množiny {0,…,N-1}.
+- Vyhledávání:
+  - posouváme **okénko délky *m*** po textu a **počítáme hash** pro danou část textu.
+  - **Je-li hash shodný** s hashem vzorku, **porovnáme** danou část textu se vzorkem **znak po znaku**.
+- Průměrný čas pro nalezení jednoho výskytu bude **Θ(m+n)**.
+
+Potřebujeme **hashovací funkci**, kterou lze při posunu okénka o pozici doprava rychle (v konstantním čase) **přepočítat**.
+
+
+```js
+procedure RabinKarp (char *text, char *pattern)
+// ohlásí všechny výskyty vzorku v textu
+// P a M jsou vhodné konstanty hešovací funkce a máme
+// předpočítáno P_m
+    j ← H(pattern) // heš vzorku
+    h ← H(text(0,patternLength-1)) // heš prvního okénka
+    for i ← (0, textLength-patternLength): // možné pozice okénka
+        if j = h: // shodné heše
+            if SameCharacters(pattern, text (i, patternLength-1)):
+                print i
+        if i < textLength - patternLength:
+            // výpočet heše pro další pozici okénka
+            h ← (P∙h – t[i]∙P_m + t[i+m]) mod N
+```
+
+## Písmenkové stromy
+![Písmenkové stromy](images/trie.png)
+
+Složitost operací vyhledávání, vkládání a mazání je **lineární** vzhledem k počtu znaků daného slova.
+
+### Komprese trie
+- **Odstraňuje přebytečné vrcholy** (ty, v nichž se slova nevětví)
+- Hrana bude namísto písmene popsána **celým řetězcem**
+- Komprimovanou trii lze převést zpět na normální trii.
+
+## Algoritmus Aho-Corasicková
+![Algoritmus Aho-Corasicková](images/aho-corasick.png)
+
+### Hledání slov
+- Postupujeme automatem po **dopředných** hranách, pokud můžeme.
+- Nelze-li použít žádnou dopřednou hranu, vracíme se po **zpětných** hranách.
+- Pokud se dostaneme zpět až **do kořene** a ani zde nelze jít s daným symbolem žádnou dopřednou hranou, symbol je **zahozen** (je přečten nový symbol).
+- V každém stavu zkontrolujeme, zda neodpovídá konci slova. Pokud ano, ohlásíme výskyt. Z každého stavu pomocí zkratek nalezneme také všechny sufixy, které jsou také slovem a ohlásíme.
+
+### Reprezentace automatu
+Pro každý stav potřebujeme tyto informace (stavy očíslujeme):
+- *Back(s)* – do kterého stavu vede zpětná hrana ze stavu s
+- *Shortcut(s)* – do kterého stavu vede zkratková hrana
+- *Word(s)* – zda v tomto stavu končí nějaké slovo (a jaké)
+- *Forward(s,x)* – kam vede dopředná hrana označená písmenem x
+
+Pozn.: Pro všechny hrany platí to, že pokud daná hrana neexistuje, reprezentujeme to hodnotou 0.
+
+### Jeden krok
+```js
+int function ACStep (int state, char x)
+    while Forward(state,x) = 0 and state  root:
+        state ← Back(state)
+    if Forward(state,x) ≠ 0:
+        state ← Forward(state,x)
+    return state
+```
+
+### Vyhledávání
+```js
+procedure ACSearch (char *t, int tl)
+    // používáme vytvořený automat, který považujeme za globální
+    state ← root
+    posT ← 0
+    while (posT < tl): // pro každý symbol vstupu
+        state ← ACStep(state,t[posT]) // proveď další krok
+        j ← state
+        while j ≠ 0: // dosažen konec slova?
+            if Word(j) ≠ 0:
+                print Word(j) // ohlášení výskytu
+            j ← ShortCut(j) // zkontroluj sufixy
+        posT← posT + 1
+```
+
+### Zhodnocení
+- **Konstrukce automatu** se provádí po hladinách, protože zpětné hrany mohou vést křížem mezi jednotlivými větvemi stromu.
+- **Časová složitost**: všechny vzorky jsou nalezeny v čase: **O(n+m+v)**, kde *m* je zde součet délek všech hledaných slov a *v* je počet výskytů.
+
+## Sufixový strom
+![Sufixový strom](images/suffix_tree.png)
+
+### Využití
+- Inverzní vyhledávání – z textu, který prohledáváme, vytvoříme sufixový strom. Pak můžeme vyhledávat libovolné slovo procházením stromu. Bude-li se slovo v textu nacházet, bude představovat prefix nějakého sufixu.
+- Nejdelší opakující se podslovo.
+- Nejdelší společné podslovo dvou slov.
+- Nejdelší palindromické podslovo.
+
+### Konstrukce
+- Lze sestrojit v lineárním čase a tedy i uvedené problémy lze řešit v lineárním čase.
+- Do prázdného stromu jsou postupně přidávány všechny prefixy daného slova (nový prefix vždy přidá symbol ke stávajícím sufixům a přidá tento sufix jako nový symbol).
+- Využití triků, které zajistí konstrukci v lineárním čase. 
