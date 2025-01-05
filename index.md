@@ -1,11 +1,12 @@
-- [Úvod](#úvod)
-- [Lineární abstraktní datové typy](#lineární-abstraktní-datové-typy)
-- [Zásobník a fronta](#zásobník-a-fronta)
-- [Stromové datové struktury](#stromové-datové-struktury)
-- [Vyhledávací tabulky](#vyhledávací-tabulky)
-- [Řazení](#řazení)
-- [Vyhledávání v textu](#vyhledávání-v-textu)
-- [Dynamické programování](#dynamické-programování)
+- [Úvod](#uvod)
+- [Lineární abstraktní datové typy](#linearni-abstraktni-datove-typy)
+- [Zásobník a fronta](#zasobnik-a-fronta)
+- [Stromové datové struktury](#stromove-datove-struktury)
+- [Vyhledávací tabulky](#vyhledavaci-tabulky)
+- [Řazení](#razeni)
+- [Vyhledávání v textu](#vyhledavani-v-textu)
+- [Dynamické programování](#dynamicke-programovani)
+- [Hashovací funkce](#hashovaci-funkce)
 
 # Úvod
 
@@ -579,39 +580,6 @@ Max+1 – velikost pole
 | TRP                                           | *1*                       |
 | TRP při maximální kolizi klíčů                | *n*                       |
 | TRP při maximální kolizi a vyváženém stromu   | *log₂ n*                  |
-
-## Hashovací funkce
-Vlastnosti:
-- Vstup **libovolné délky** transformuje na výstup **fixní délky**
-- **Determinismus** – pro stejný vstup vrací vždy stejný výstup
-- **Rychlost** – není výpočetně náročné funkci vyčíslit
-- **Malá změna na vstupu** (např. jednoho bitu) způsobí **velkou změnu na výstupu** (tzv. Avalanche Effect)
-- Navržena tak, aby měla **co nejméně kolizí**.
-
-Využití hashovacích funkcí:
-- **Zajištění integrity dat** – kontrolní součty (sítě, archivy aj.)
-- **Zajištění nepopiratelnosti dat** – elektronický podpis
-= hash zprávy zašifrovaný privátním klíčem podepisujícího
-- **Zajištění důvěrnosti dat**
-    - Ukládání hesel – operační systémy, informační systémy, aplikace (při přihlášení se hash zadaného hesla porovná s uloženým hashem)
-    - Součást kryptografických protokolů (šifrovací protokoly TLS/SSL)
-- **Rychlá identifikace souborů** – souborové systémy,
-distribuované systémy, forenzní analýza digitálních dat
-- **Tabulky s rozptýlenými položkami** (hashovací tabulky)
-
-### Kryptografické hashovací funkce
-Aby byla funkce použitelná pro kryptografické účely, musí být výpočetně nezvládnutelné v „rozumném čase“:
-- Z výstupu spočítat původní vstup (**1st Preimage Resistance**)
-- Pro daný hash najít další vstup, který povede na stejný hash (**2nd Preimage Resistance**)
-- Najít dva vstupy, které povedou ke kolizi – stejnému hashi (**Collision resistence**)
-
-### Další typy hashovacích funkcí
-- **Fuzzy hashing / Similarity hashing** – analýza podobnosti: Je naopak žádoucí, aby dva podobné vstupy měly podobný hash
-    - SSDEEP, sdhash, TLSH
-- **Klouzavé hashovací funkce** (rolling hash functions) – Efektivní výpočet hodnot posouvajícího se okna nad vstupními daty
-    - Adler32, CRC, Rabin-Karpův hash, Spamsum
-- **Percepční hashování** (perceptual hashing) – detekce podobných multimediálních souborů (obrázky, zvuk)
-    - pHash, dHash, aHash
 
 # Řazení
 **Třídění** (**sorting**) položek neuspořádané množiny je uspořádání do tříd podle hodnoty daného atributu – klíče položky.
@@ -1618,3 +1586,125 @@ Požadavky:
 - **Minimalizace kolizí**
 - **Uniformní rozložení** – Funkce je navržena tak, aby rovnoměrně využívala celý prostor hodnot
 
+## Využití hashovacích funkcí
+1. **Kontrola integrity dat** (kontrolní součty)
+   - **Kontrola integrity archivu** – zda není poškozen
+   - Zajištění spolehlivého přenosu – počítačové sítě
+2. **Bezpečnost (Kryptografické hashovací funkce)**
+   - Zajištění důvěrnosti – např. ukládání hesel
+   - Zajištění nepopiratelnosti – elektronický podpis
+   - Odvozování šifrovacích klíčů (key derivation funtions)
+   - Generování autentizačních tokenů
+3. **Rychlá identifikace obsahu**
+   - hash je menší, rychleji se porovnává
+   - Hledání podřetězce v řetězci (Rabin-karpův hash apod.)
+   - Deduplikace– redukce shodných prvků (např. souborů)
+4. **Tabulky s rozptýlenými položkami (TRP)** - „hashovací tabulky“
+    - Určení pozice v tabulce – získání indexu z klíče
+    - Určení kroku – implicitní zřetězení, dvojí rozp. funkce
+5. **Forenzní analýza & Vyšetřování incidentů**
+    - Zajištění integrity důkazů – kontrolní součty obrazů
+    - Eliminace známých souborů při dohledávání stop
+6. **Blockchain a kryptoměny**
+    - Mining – ověřování transakcí, tvorba nových bloků
+    - Generování adresy – určení adresy peněženky
+    - Proof of work– vynaložení úsilí u blockchainových operací
+7. **Hledání a získávání informací**
+    - Adresování obsahu – identifikace objektů, revizí kódu nebo změn (např. Git)
+    - Bloomův filtr – rychlá identifikace, zda prvek nepatří do dané množiny
+8. **Vyvažování zátěže & Partitioning** (uniformní rozložení je zde velkou výhodou)
+    - Rozdělování výpočtu v distribuovaných systémech
+    - Distribuované souborové systémy
+9. **Strojové učení a zpracování dat**
+    - Feature hashing - převod vícedimenzionálních dat do reprezentace v nižším menšího počtu dimenzí
+    - Data shuffling – zajištění náhodného pořadí v souboru
+10. **Detekce malware a hrozeb**
+    - Identifikace závadných souborů– porovnání hashe souboru s hashi známých závadných souborů
+    - Threat intelligence sharing– sdílení signatur hrozeb
+11. **Sítě Peer2Peer**
+    - Adresování obsahu – např. síť BitTorrent
+    - Synchronizace dat – ověření, že máme aktuální verzi souboru (na základě porovnání hashe)
+12. **Bioinformatika**
+    - Analýza DNA – porovnávání/identifikace sekvencí
+    - Protein matching– hledání a porovnávání proteinů
+13. **Kontrola podobnosti**
+    - Fuzzy hashing, similarity hashing– určení míry podobnosti dvou datových objektů
+    - Vyžaduje speciální hashovací funkce pro tento účel (Podobné vstupy mají podobný hash - zatímco např. v kryptografii chceme přesný opak)
+    - Percepční hashování (perceptual hashing) – Určení podobnosti objektů, které vypadají podobně, zvuku/hlasu, který zní podobně, 
+
+
+## Kryptografické hashovací funkce
+Aby byla funkce použitelná pro kryptografické účely, musí být výpočetně nezvládnutelné v „rozumném čase“:
+- Z výstupu spočítat původní vstup (**1st Preimage Resistance**)
+- Pro daný hash najít další vstup, který povede na stejný hash (**2nd Preimage Resistance**)
+- Najít dva vstupy, které povedou ke kolizi – stejnému hashi (**Collision resistence**)
+
+**Malá změna na vstupu** (např. jednoho bitu) způsobí **velkou změnu na výstupu** (tzv. Avalanche Effect)
+
+Příklady: Message Digest, Secure hash algorithm (SHA), Blake2, BCrypt, SCrypt, Argon2.
+
+### Rainbow Tables
+- Pokročilá varianta Lookup Table Attack, která je mnohem úspornější
+- Využívá tzv. redukční funkci a princip řetězení (chaining)
+- Nepokrývá vždy všechny možnosti (typicky 96 – 99.9%)
+
+#### Ochrana proti Rainbow Tables
+Myšlenka: heslo před vstupem do algoritmu prodloužíme
+##### Kryptografická sůl (Cryptographic Salt)
+- Pseudonáhodná hodnota o vysoké entropii (neurčitosti)
+- Vygeneruje se při tvorbě hesla. S heslem se spojí (prodlouží jej) před vstupem do hashovacího algoritmu.
+- Sůl následně uložíme spolu s hashem.
+
+##### Ověření hesla se solí
+- Z databáze získáme hash a uloženou sůl (např. pro daného uživatele)
+- Zadané heslo spojíme se solí a pak až počítáme hash. Následně hesla standardně porovnáváme.
+
+## Funkce pro kontrolní součty
+Požadavky:
+- Rychlý výpočet i pro velký vstup
+- Jednoduchá implementace
+- Jednoduché použití pro detekci chyb
+
+Příklady
+- Paritní bit - XOR nad všemi bity, výsledek: 1 bit
+- LRC (Longitudal Redundancy Check)– parita po bytech, výsledek: 1B
+- CRC (Cyclic Redundancy Check): CRC-16, CRC-32
+<small>Princip dělení polynomů v konečném tělese – implementováno pomocí jednoduchých bitových operací -> velmi rychlé</small>
+- MD5/SHA-1 (pro zajištění integrity jsou OK)
+- Adler32 – při kompresi dat (např. zlib), rychlejší než CRC-32
+- Fletcherův algoritmus – podobný princip jako Adler32 
+
+## Klouzavé hashovací funkce
+**Rolling hash functions** – Klouzavé hashovací funkce
+- Využívají okénko, které se posouvá nad vstupem
+- Při posuvu lze novou hodnotu hashe přepočítat v **konstantním** čase. Často staví na polynomech: stačí vynásobit, něco přičíst a něco odečíst.
+
+Příklady
+- Rabin-Karpův algoritmus – vyhledávání v textu
+- Spamsum – detekce spamu v poště
+- CRC, Adler32 – kontrolní součty
+
+## Fuzzy Hashing
+- **Fuzzy hashing / similarity hashing** = určování podobnosti
+- Je naopak žádoucí, aby podobné vstupy měly podobný hash
+- **SDhash** (Similarity Digest Hash)
+    - Hledá v textu příznaky – n-gramy či specifické vzory
+    - Pro tyto příznaky spočítá hashe
+    - Výsledný hash vznikne spojením hashů pro příznaky
+    - Porovnávání hashů = počítání výskytů společných příznaků
+- Další typy:
+    - SSDeep
+    - TLSH (Trend Micro Locality Sensitive Hashing)
+
+## Perceptual Hashing
+- **Percepční hashování** – fuzzy/similarity hashing přizpůsobený pro multimediální data
+- Obrázky: chceme, aby podobně vypadající měly podobný hash
+- Zvuk: chceme, aby podobně znějící zvuk měl podobný hash
+- **Přístupy**
+    - Extrakce příznaků
+    - Redukce dimenzí
+    - Měření podobnosti
+    - Kvantizace
+- Např.
+    - pHash, dHash
+    - aHash
