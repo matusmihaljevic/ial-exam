@@ -5,6 +5,7 @@
 - [Vyhledávací tabulky](#vyhledávací-tabulky)
 - [Řazení](#řazení)
 - [Vyhledávání v textu](#vyhledávání-v-textu)
+- [Dynamické programování](#dynamické-programování)
 
 # Úvod
 
