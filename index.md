@@ -1,14 +1,4 @@
-- [Úvod](#uvod)
-- [Lineární abstraktní datové typy](#linearni-abstraktni-datove-typy)
-- [Zásobník a fronta](#zasobnik-a-fronta)
-- [Stromové datové struktury](#stromove-datove-struktury)
-- [Vyhledávací tabulky](#vyhledavaci-tabulky)
-- [Řazení](#razeni)
-- [Vyhledávání v textu](#vyhledavani-v-textu)
-- [Dynamické programování](#dynamicke-programovani)
-- [Hashovací funkce](#hashovaci-funkce)
-
-# Úvod
+# Úvod 
 
 ## Algoritmus
 - Konečná, uspořádaná množina úplně definovaných pravidel pro vyřešení nějakého problému
