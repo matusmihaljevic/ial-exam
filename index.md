@@ -5,6 +5,7 @@
 - [Vyhledávací tabulky](#vyhledávací-tabulky)
 - [Řazení](#řazení)
 - [Vyhledávání v textu](#vyhledávání-v-textu)
+- [Dynamické programování](#dynamické-programování)
 
 # Úvod
 
@@ -253,7 +254,7 @@ bool function SearchG (TTable t, TKey k)
 
 - Lze provést nad seřazenou množinou klíčů ve struktuře s náhodným přístupem (v poli).
 - Připomíná metodu půlení intervalu pro hledání jediného kořene funkce v daném intervalu
-- Výhoda: časová složitost vyhledávání je v nejhorším případě logaritmická: **log~2~(n)**
+- Výhoda: časová složitost vyhledávání je v nejhorším případě logaritmická: **log₂(n)**
 
 ```js
 left ← 0 right ← t.n-1 // levý index
@@ -521,7 +522,7 @@ Vyhledávání v TRP má **index-sekvenční** charakter.
 - Seznam synonym je obvykle realizován jako **lineární seznam**.
 - Maximální doba vyhledávání je pak dána délkou nejdelšího seznamu synonym – **O(n)**.
 - Místo lineárních seznamů pro uložení synonym lze použít **vyvažované binární vyhledávací stromy**.
-- Pak je časová složitost v nejhorším případě **O(log~2~ n)**.
+- Pak je časová složitost v nejhorším případě **O(log₂ n)**.
 
 ### TRP s implicitním zřetězením synonym
 - TRP implementovaná polem, ve kterém jsou uloženy jak první prvky seznamů synonym, tak jejich další položky.
@@ -568,16 +569,16 @@ Max+1 – velikost pole
 - Maximální kapacita TRP pro rozsah pole <0..Max> je **Max** (o 1 menší než počet prvků pole) – alespoň jeden prvek musí zůstat jako **zarážka vyhledávání**.
 
 ## Hodnocení metod vyhledávání
-| Metoda vyhledávání             | Časová složitost          |
-|--------------------------------|---------------------------|
-| Sekvenční vyhledávání          | *n*                       |
-| Binární vyhledávání v seřazeném poli | *log₂ n*              |
-| Binární vyhledávací strom      | *log₂ n*                 |
-| BVS při degradaci na seznam        | *n*  |
-| Vyvažovaný BVS (např. AVL)     | *log₂ n*                 |
-| TRP                            |       *1*                    |
-| TRP při maximální kolizi klíčů     | *n*  |
-| TRP při maximální kolizi a vyváženém stromu | *log₂ n*          |
+| Metoda vyhledávání                            | Časová složitost          |
+|-----------------------------------------------|---------------------------|
+| Sekvenční vyhledávání                         | *n*                       |
+| Binární vyhledávání v seřazeném poli          | *log₂ n*                  |
+| Binární vyhledávací strom                     | *log₂ n*                  |
+| BVS při degradaci na seznam                   | *n*                       |
+| Vyvažovaný BVS (např. AVL)                    | *log₂ n*                  |
+| TRP                                           | *1*                       |
+| TRP při maximální kolizi klíčů                | *n*                       |
+| TRP při maximální kolizi a vyváženém stromu   | *log₂ n*                  |
 
 ## Hashovací funkce
 Vlastnosti:
@@ -742,7 +743,7 @@ Nejvýznamnějším případem je porušení v kořeni.
 Operace **Sift** (prosetí nebo také zatřesení hromadou):
   - Operace, která znovuustaví hromadu porušenou v kořeni.
   - Prvek z kořene se postupnými výměnami **propadne** na své místo a do kořene se dostane prvek splňující pravidla hromady.
-  - Operace má v nejhorším případě složitost **log~2~ n**. 
+  - Operace má v nejhorším případě složitost **log₂ n**. 
 
 #### Implementace hromady polem
 Protože musí být zaplněny všechny hladiny kromě poslední a poslední musí být zaplněna zleva, můžeme strom ukládat do pole **po hladinách**.
@@ -757,7 +758,7 @@ když je otcovský uzel na indexu *i*, pak je levý syn na indexu *2i+1* a prav�
 
 Má-li pole *MAX* prvků (indexováno od *0* do *MAX-1*), pak nejnižší a nejpravější otcovský uzel odpovídající hromady má index: *(MAX div 2) – 1*. Následující otcovské uzly leží na **předchozích** indexech.
 
-Celkem musíme opravit n/2 hromad, celé ustavení hromady zvládneme v čase **n/2*log~2~n**.
+Celkem musíme opravit n/2 hromad, celé ustavení hromady zvládneme v čase **n/2*log₂n**.
 
 ```js
 procedure HeapSort (TArray A)
@@ -997,7 +998,7 @@ procedure ShellSort (TArray A)
 - Pracuje **in situ**.
 - Časová složitost závisí na zvolené řadě snižujících se kroků:
   - Pro uvedenou verzi (n/2, n/4, …, 1) je v nejhorším případě časová složitost **n^2^**.
-  - Existují řady, pro které je časová složitost **n^3/2^** nebo **n*log~2~ n**.
+  - Existují řady, pro které je časová složitost **n^3/2^** nebo **n*log₂ n**.
 
 
 ## Řazení na principu slučování
@@ -1252,8 +1253,8 @@ int KMPMatch(char *t, char *p, int pl, int tl, int fail[pl])
 - Určuje **počet pozic**, o které lze při nesouhlasu porovnávaného vzorku s**kočit dopředu**.
 
 **Délka skoku** závisí na tom, **kde** ve vzorku **se nachází symbol z textu**, pro který došlo k neshodě:
-- pokud se ***t~j~* vůbec nevyskytuje** ve vzorku *P*, lze **poskočit o *m* pozic.**
-- v případě, že se ***t~j~* ve vzorku nachází**, je potřeba provést **nejmenší možný skok** – odvozený od **nejpravějšího výskytu** znaku ve vzorku.
+- pokud se ***t<sub>j</sub>* vůbec nevyskytuje** ve vzorku *P*, lze **poskočit o *m* pozic.**
+- v případě, že se ***t<sub>j</sub>* ve vzorku nachází**, je potřeba provést **nejmenší možný skok** – odvozený od **nejpravějšího výskytu** znaku ve vzorku.
 
 ```js
 procedure ComputeJumps (char *p, int CharJump[cardABC])
@@ -1357,7 +1358,7 @@ Pozn.: Pro všechny hrany platí to, že pokud daná hrana neexistuje, reprezent
 ### Jeden krok
 ```js
 int function ACStep (int state, char x)
-    while Forward(state,x) = 0 and state  root:
+    while Forward(state,x) = 0 and state ≠ root:
         state ← Back(state)
     if Forward(state,x) ≠ 0:
         state ← Forward(state,x)
@@ -1397,3 +1398,223 @@ procedure ACSearch (char *t, int tl)
 - Lze sestrojit v lineárním čase a tedy i uvedené problémy lze řešit v lineárním čase.
 - Do prázdného stromu jsou postupně přidávány všechny prefixy daného slova (nový prefix vždy přidá symbol ke stávajícím sufixům a přidá tento sufix jako nový symbol).
 - Využití triků, které zajistí konstrukci v lineárním čase. 
+
+# Dynamické programování
+ 
+## Hanojské věže
+
+### Rekurzivně
+```js
+procedure rHanoi (int h, int from, int to, int aux)
+    if h > 0:
+        rHanoi (h-1,from,aux,to)
+        MoveDisk (from,to)
+        rHanoi (h-1,aux,to,from)
+```
+
+### Nerekurzivně
+```js
+procedure PushInfo (int h, int from, int to, int aux)
+    while h ≠ 0:
+        Push(S,h,from,to,aux)
+        to <-> aux
+        h ← h - 1
+
+procedure iHanoi (int h, int from, int to, int aux)
+    InitStack(S)
+    PushInfo(h,from,to,aux)
+    while not IsEmpty(S):
+        TopPop(S,h,from,to,aux)
+        MoveDisk(from,to)
+        PushInfo(h-1,aux,to,from)
+```
+
+## Dynamické programování
+- Využívá rekurzivní **rozklad problému na podproblémy**.
+- Pokud se ale podproblémy během rekurze **opakují**, řeší se **pouze 1x** → rychlejší algoritmy
+- Využívá **cyklus a pomocnou datovou strukturu**.
+
+### Princip dynamického programování
+1. Začneme s **rekurzivním** algoritmem, který je **exponenciálně** pomalý.
+2. Odhalíme **opakované výpočty** stejných podproblémů.
+3. Použijeme **tabulku**, ve které si budeme pamatovat výsledky podproblémů, které jsme již vyřešili (memoizace, kešování). Prořežeme tak strom rekurze a dostaneme rychlejší algoritmus.
+4. Zvolíme **vhodné pořadí** řešení podproblémů, abychom se mohli vyhnout rekurzi (jednodušší algoritmus).
+
+### Fibonacciho čísla
+```js
+unsigned rFib (unsigned n)
+    // rekurzivní funkce pro výpočet n-tého Fibonacciho čísla
+    if n = 0:
+        return 0
+    else:
+        if n = 1:
+            return 1
+        else:
+            return rFib(n-1) + rFib(n-2)
+```
+
+- Lze ukázat, že složitost předchozího algoritmu je **exponenciální**.
+- Proč? – protože **mnohokrát počítáme totéž**.
+- **Vylepšení** – co jsme již spočítali, si zapamatujeme v tabulce T a nebudeme to počítat znovu.
+
+```js
+int rFib2 (int n)
+    if T[n] ≠ -1: // hodnota v tabulce pro n už je def.
+        return T[n]
+    else
+        if n ≤ 1:
+            T[n] ← n
+        else:
+            T[n] ← rFib2(n-1) + rFib2(n-2)
+        return T[n]
+```
+
+- Získali jsme **lineární** časovou složitost.
+- Dokonce ani **nepotřebujeme rekurzi**:
+```js
+int iFib (int n)
+    T[0] ← 0
+    T[1] ← 1
+    for i ← (2, n):
+        T[i] ← T[i-1] + T[i-2]
+    return T[n]
+```
+
+## Editační vzdálenost
+- Editační vzdálenost (Levenshteinova vzdálenost) mezi dvěma řetězci je definována jako **minimální počet operací**, které musí být provedeny, aby řetězce byly totožné.
+- Operace: substituce, vkládání, mazání
+
+```js
+int rEdit (int i, int j)
+    if i > n: // řetězec x skončil
+        return m-j+1
+    else:
+        if j > m: // řetězec y skončil
+            return n-i+1
+        else:
+            le ← rEdit(i+1,j+1) // ponechání/změna znaku
+            if x[i] <> y[j]:
+                le ← le + 1
+            ld ← rEdit(i+1,j) + 1 // smazání znaku
+            li ← rEdit(i,j+1) + 1 // vložení znaku
+            return min(le,ld,li)
+```
+
+- Časová složitost uvedeného algoritmu je **exponenciální**.
+- Exponenciální složitost je způsobena **opakovaným voláním funkce** pro stejné hodnoty parametrů.
+- Opět použijeme tabulku (matici) pro uchování již známých hodnot.
+- Otočíme směr výpočtu, abychom se vyhnuli rekurzi, budeme postupovat od nejkratších sufixů směrem k delším sufixům.
+- **Výsledek** – algoritmus běžící v čase **Θ(nm)**
+
+![Editační vzdálenost - tabulka](images/edit.png)
+
+![Editační vzdálenost - iterativně](images/edit_it.png)
+
+Lze také **popsat pomocí orientovaného grafu**.
+
+## Optimalizační problém batohu
+- *0-1 Knapsack problem*
+- Máme batoh, který má danou **nosnost**.
+- Dále máme **množinu věcí**, každá věc má určitou hmotnost a svoji cenu.
+- **Úkol**: vybrat do batohu věci tak, aby nebyla překročena jeho
+nosnost a zároveň součet cen vybraných věcí byl maximální.
+
+```js
+int rKnapsack (int n, int W, int wt[], int val[])
+// Vrací maximální hodnotu věcí, které nepřekročí nosnost W
+// n je aktuální počet dostupných věcí
+    if n = 0 or W = 0:
+        return 0
+    else:
+        if (wt[n-1] > W): // váha pol. překračuje nosnost
+            return rKnapsack(n-1, W, wt, val)
+        else: // položka může být přidána
+            return max(
+                val[n-1]+rKnapsack(n-1, W-wt[n-1], wt, val),
+                rKnapsack(n-1, W, wt, val))
+```
+***Pozn.***: váha a cena n-té věci je na indexu n-1.
+
+
+Budeme raději ukládat výsledky již vyřešených problémů do vhodné „tabulky“.
+- Řešíme optimalizační problém s dvěma parametry (počet sebraných věcí a maximální váha), proto vytvoříme dvojrozměrné pole *M* o velikosti *n x W*.
+- Pozice *M[i,w]* bude obsahovat maximální hodnotu (cenu), kterou jsme schopni získat při využití věcí *0..i* a maximální váhy *w*.
+- Optimální řešení bude na pozici *M[n,W]*.
+
+Výsledná časová složitost: **Θ(nW)**
+
+```js
+int dpKnapsack (int n, int W, int wt[], int val[])
+    // Vrací maximální hodnotu věcí, které nepřekročí nosnost W
+    for i ← (0, n):
+        for w ← (0, W):
+            if i = 0 or w = 0: // nemáme žádnou věc nebo váhu
+                M[i,w] ← 0
+            else:
+                if wt[i-1] ≤ w: // věc lze přidat
+                    M[i,w] ← max(val[i-1] + M[i-1,w-wt[i-1]], M[i-1,w])
+                else: // věc nelze přidat kvůli váze
+                    M[i,w] ← M[i-1,w]
+    return M[n,W]
+```
+
+![Problém batohu – iterativně](images/knapsack.png)
+
+## Optimální BVS
+- Optimalizace BVS **podle četnosti vyhledávání** jednotlivých položek při zachování pravidel BVS
+- **Cíl**: častěji vyhledávané položky umístit blízko ke kořeni
+- **Cena**: počet navštívených vrcholů
+
+![Optimální BVS – rekurzivně](images/optimal_bst.png)
+
+```js
+int rOptBVS (int i, int j)
+    if i > j: // prázdný úsek, BVS s cenou 0
+        return 0
+    else:
+        W ← wi + … + wj // celková váha prvků
+        C ← MaxInt // inicializace ceny
+        for k ← (i,j): // všechny volby kořene
+            cl ← rOptBvs(i, k-1) // cena levého podstromu
+            cr ← rOptBvs(k+1, j) // cena pravého podstromu
+            C ← min(C, cl+cr+W) // celková nejlepší cena
+        return C
+```
+
+- Cena optimálního BVS pro danou n-tici (úsek) klíčů závisí pouze na ceně optimálního BVS pro menší n-tice (úseky).
+- Tabulku mezivýsledků můžeme vyplňovat postupně od nejkratších n-tic (úseků) množiny klíčů k nejdelším.
+- Pro snadnější rekonstrukci stromu budeme v další tabulce také uchovávat nejlepší možný kořen pro danou n-tici klíčů.
+- Algoritmus poběží v čase **Θ(n<sup>3</sup>)**
+
+```js
+int dpOptBVS (int n, int key[], int w[], int K[])
+    // počet prvků n, seřazená posloupnost klíčů key,
+    // odpovídající posloupnost vah w, tabulka kořenů BVS K
+    for i ← (1, n+1): // prázdné stromy – cena 0
+        T[i, i-1] ← 0
+    for d ← (1, n): // všechny délky úseků
+        for i ← (1, n-d+1): // všechny začátky úseků
+            j ← i+d-1 // konec aktuálního úseku
+            W ← w[i] + … + w[j] // celková váha úseku
+            T[i,j] ← MaxInt // inicializace ceny
+            for k ← (i,j): // všechny volby kořene
+                C ← T[i,k-1] + T[k+1,j] + W // cena stromu
+                if C < T[i,j]: // průběžné minimum
+                    T[i,j] ← C
+                    K[i,j] ← k
+    return T[1,n] // výslená cena optimálního BVS
+```
+
+![Optimální BVS – iterativně](images/optimal_bst_table.png)
+
+# Hashovací funkce
+- Vstup **libovolné délky** transformuje na výstup **fixní délky** (z tohoto důvodu se nelze úplně vyhnout kolizím)
+- Výstup se nazývá **hash**
+
+Požadavky:
+- **Fixní délka výstupu**
+- **Determinismus** – pro stejný vstup vrací vždy stejný výstup
+- **Efektivita**
+- **Minimalizace kolizí**
+- **Uniformní rozložení** – Funkce je navržena tak, aby rovnoměrně využívala celý prostor hodnot
+
